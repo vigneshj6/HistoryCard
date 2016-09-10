@@ -1,0 +1,14 @@
+{
+  "subjects":  [
+              {"sub_code": "ENB3211"},
+              {"sub_code": "CSE101"},
+              {"sub_code": "DATA202"},
+              {"sub_code": "VENDAKKA0"}
+            ],
+  "batches":  [
+              {"name": "2013-2017"},
+              {"name": "2014-2018"},
+              {"name": "2015-2019"},
+              {"name": "2016-2020"}
+            ]
+}

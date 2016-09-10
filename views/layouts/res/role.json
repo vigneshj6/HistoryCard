@@ -1,0 +1,44 @@
+{
+  "assignments": [
+        {
+          "role": "classAdv",
+          "batch": "2013-2017",
+          "dept": "CSE",
+          "sec": "A"
+        },
+        {
+          "role": "facultyAdv",
+          "batch": "2013-2017",
+          "dept": "CSE",
+          "sec": "A"
+        },
+        {
+          "role": "subTeach",
+          "batch": "2014-2018",
+          "dept": "CSE",
+          "sec": "B",
+          "sub_code": "CSB1221"
+        },
+        {
+          "role": "subTeach",
+          "batch": "2013-2017",
+          "dept": "CSE",
+          "sec": "A",
+          "sub_code": "CSB1211"
+        },
+        {
+          "role": "subTeach",
+          "batch": "2013-2017",
+          "dept": "CSE",
+          "sec": "A",
+          "sub_code": "CSB1217"
+        },
+        {
+          "role": "subTeach",
+          "batch": "2016-2020",
+          "dept": "CSE",
+          "sec": "A",
+          "sub_code": "CSB3211"
+        }
+  ]
+}

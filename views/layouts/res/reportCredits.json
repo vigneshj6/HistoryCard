@@ -1,0 +1,21 @@
+{
+    "credits": [
+        {
+            "sem": 1,
+            "credits": 20
+        },
+        {
+            "sem": 2,
+            "credits": 24
+        },
+        {
+            "sem": 3,
+            "credits": 21
+        },
+        {
+            "sem": 4,
+            "credits": 27
+        }
+    ],
+    "tot_credits": 92
+}

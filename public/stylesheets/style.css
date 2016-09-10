@@ -1,8 +1,93 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.btn-file {
+  position: relative;
+  overflow: hidden;
 }
 
-a {
-  color: #00B7FF;
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.list-even {
+  background-color: #F5F5F5 !important;
+}
+
+.with-border {
+  margin: 5px 2px;
+	border: #cdcdcd thin solid;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.with-border + .with-border {
+  margin-left: 0px;
+}
+
+.border-no-top {
+  margin: 5px 0px;
+  border: #cdcdcd solid;
+  border-width: 0px thin thin thin !important;
+	-moz-border-width: 0px thin thin thin !important;
+	-webkit-border-width: 0px thin thin thin !important;
+}
+
+.box {
+  margin: 5px 0px;
+}
+
+.box + .box {
+  margin-top: 0px;
+}
+
+.no-padding {
+   padding: 0 !important;
+}
+
+.margin-all {
+  padding: 20px 10px;
+}
+
+.margin-tb {
+  margin: 5px 0px;
+}
+
+.margin-lr {
+  margin: 0px 5px;
+}
+
+.margin-left {
+  margin: 0px 5px 0px 0px !important;
+}
+
+.margin-right {
+  margin: 0px 0px 0px 5px !important;
+}
+
+
+.margin-top {
+  margin: 5px 0px 0px 0px !important;
+}
+
+
+.margin-bottom {
+  margin: 0px 0px 5px 0px !important;
+}
+
+.no-margin {
+   margin: 0 !important;
+}
+
+.list-group {
+  margin-bottom: 0 !important;
 }

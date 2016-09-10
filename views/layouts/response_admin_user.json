@@ -1,0 +1,22 @@
+{
+  "users":  [
+              {"id": "User1"},
+              {"id": "User2"},
+              {"id": "User3"},
+              {"id": "User4"}
+            ],
+  "dept": [
+            {"name": "CSE"},
+            {"name": "ECE"},
+            {"name": "EEE"},
+            {"name": "MECH"},
+            {"name": "AUTO"},
+            {"name": "AERO"}
+          ],
+"batches":  [
+            {"name": "2013-2017"},
+            {"name": "2014-2018"},
+            {"name": "2015-2019"},
+            {"name": "2016-2020"}
+          ]
+}

@@ -1,0 +1,29 @@
+{
+  "stud": [
+    {
+      "name" : "Wazir Ahmed",
+      "rrn" : "130071601097",
+      "batch" : "2013-2014"
+    },
+    {
+      "name" : "Vigneshwaran",
+      "rrn" : "130071601095",
+      "batch" : "2013-2014"
+    },
+    {
+      "name" : "Ramakrishnan Ramanarayanan",
+      "rrn" : "130071603007",
+      "batch" : "2013-2014"
+    },
+    {
+      "name" : "Ravindrababu Ravula",
+      "rrn" : "130071606098",
+      "batch" : "2013-2014"
+    },
+    {
+      "name" : "Douglas Crockford",
+      "rrn" : "130071606096",
+      "batch" : "2013-2014"
+    } 
+  ]
+}
