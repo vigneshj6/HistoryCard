@@ -24,18 +24,18 @@ app.use(session({secret: 'jkdha3423f34sf78'}));
 
 //route /log request to rout
 var rout = xprs.Router();
-require("./login.js")(rout,session);//pass rout and session to the module
+require("./routes/login.js")(rout,session);//pass rout and session to the module
 app.use('/log*',rout);//include the function inside that module
 
 
 //route /student to student.js 
 var student = xprs.Router();
-require("./student.js")(student,session);//pass student and session to the module
+require("./routes/student.js")(student,session);//pass student and session to the module
 app.use('/student',student);//include the function inside that module
 
 
 var teacher = xprs.Router();
-require("./teacher.js")(teacher,session);//pass teacher and session to the module
+require("./routes/teacher.js")(teacher,session);//pass teacher and session to the module
 app.use('/teacher',teacher);//include the function inside that module
 
 var admin = xprs.Router();
@@ -44,7 +44,7 @@ useless(admin,session);   //pass admin and session to the module
 app.use('/admin',admin); // include the function inside that module
 
 //listen port 8082
-app.listen(8080,function(){
+app.listen(8082,function(){
     console.log("listening");
 });
 

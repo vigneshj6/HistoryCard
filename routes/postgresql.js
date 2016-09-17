@@ -12,6 +12,19 @@ var sync = require("synchronize");
 
 //module to export functions in postgresql.jss in postgresql.js
 module.exports = {
+    init : function(cb){
+        var client = db.dbconnect('');
+        var credit_query=db.sql('init');
+        console.log('working ... ');
+        client.query('CREATE DATABASE "history"',function(er) {
+            var client = db.dbconnect('history');
+            var query = client.query(credit_query,function(err){
+            cb(err);
+        });
+        });
+        
+    }
+    ,
     //function name is sem_credits_all
     sem_credits_all : function(rrn,dbval,usercall){
         if(rrn.length==12){//validation

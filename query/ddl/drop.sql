@@ -1,0 +1,1 @@
+DELETE FROM "batch" where "BATCH" = $1; 

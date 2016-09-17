@@ -3,6 +3,7 @@ var fs = require("fs");
 var pg = require("pg");
 
 // loading sql query as string.
+var init = fs.readFileSync('./query/init/init.sql').toString();
 
 var student_cat = fs.readFileSync('./query/join_query.sql').toString();
 
@@ -106,7 +107,7 @@ function db(db){
         conString = "pg://ramki:enter@localhost:5432/"+db;
     }
     else{
-        conString = "pg://ramki:enter@localhost:5432/";
+        conString = "pg://ramki:enter@localhost:5432";
     }
     var client = new pg.Client(conString);
     client.connect();
@@ -258,6 +259,9 @@ function sql(opt) {
     }
     else if(opt === "deassign_subj_batch"){
         return deassign_subj_batch;
+    }
+    else if(opt === "init"){
+        return init;
     }
     else{
         return "0";
