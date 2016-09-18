@@ -5,13 +5,11 @@ var db=require("./postgresql");
 
 //body-parser package has request parser functionality
 //request with query parsed to json eg: (?sem=1 to {sem:1}) 
-var bodyParser = require("body-parser");
 
 
 //exports the module and functions defined here to main.js(refer main.js).
 //we recieve router object and session json from main.js
 module.exports = function(routes,session) {
-    routes.use(bodyParser());//to use both json and query parser from body-parser
     
     // post request to /login
     routes.post('/',function(req,res){

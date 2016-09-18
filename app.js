@@ -54,7 +54,15 @@ if (app.get('env') === 'development') {
 
 
 //session should be encrypted and the key is jkdha3423f34sf78h
-app.use(session({secret: 'jkdha3423f34sf78'}));
+app.use(
+  session
+  (
+    { secret: 'jkdha3423f34sf78',
+      resave: true,
+      saveUninitialized: true
+    }
+  )
+);
 
 
 //route /log request to rout

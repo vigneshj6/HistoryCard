@@ -7,9 +7,6 @@ var fs = require("fs");
 //import handlebars to render
 var handlebars = require("handlebars");
 
-//import body-parser for parsing request and json.
-var bodyParser = require("body-parser");
-
 //to set path import path module
 var path = require("path");
 
@@ -22,7 +19,6 @@ function check(type){
 }
 
 module.exports = function(routes,session) {
-    routes.use(bodyParser());
 
     // "/" to display user.html as it is in student route already 
     routes.get('/', function(req, res){
