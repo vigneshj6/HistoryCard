@@ -1,0 +1,12 @@
+{
+	"server": {
+		"port"     : "8082"
+	}
+	,
+	"postgres": {
+		"db"       : "history",
+		"user"     : "admin",
+		"password" : "root",
+		"host"     : "localhost"
+	}
+}
