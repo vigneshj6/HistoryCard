@@ -2,6 +2,8 @@ var fs = require("fs");
 
 var pg = require("pg");
 
+var config = require('../config.json');
+
 // loading sql query as string.
 var init = fs.readFileSync('./query/init/init.sql').toString();
 
@@ -103,11 +105,13 @@ var deassign_subj_batch = fs.readFileSync('./query/assign/deassign_subj_batch.sq
 
 function db(db){
     var conString;
-    if(db!=''){
-        conString = "pg://ramki:enter@localhost:5432/"+db;
+    if(db!='')
+    {
+        conString = "pg://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+":5432/"+db;
     }
-    else{
-        conString = "pg://ramki:enter@localhost:5432";
+    else
+    {
+        conString = "pg://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+":5432/"+config.postgres.db;
     }
     var client = new pg.Client(conString);
     client.connect();

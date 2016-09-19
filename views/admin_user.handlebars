@@ -1,0 +1,243 @@
+<div class="panel panel-default clearfix no-margin">
+
+  <div class="panel-heading text-center clearfix">
+    <form class="form-inline margin-tb" onsubmit="return user_search()">
+      <div class="form-group pull-left dropdown margin-left">
+        <button type="button" class="btn btn-primary btn-mg dropdown-toggle" data-toggle="dropdown">Type of User&nbsp;
+          <span class="caret"></span></button>
+        <div class="dropdown-menu">
+          <div class="margin-lr">
+            <input type="radio" name="user_type" value="student" onchange="changeIn_user_type()"> Student
+            <br>
+            <input type="radio" name="user_type" value="teacher" onchange="changeIn_user_type()"> Teacher
+            <br>
+            <input type="radio" name="user_type" value="both" checked onchange="changeIn_user_type()"> Both
+          </div>
+        </div>
+      </div>
+      <div class="form-group pull-left">
+        <input type="text" class="form-control input-mg" placeholder="Search" id="user_query_inp">
+      </div>
+      <div class="form-group pull-left margin-lr">
+        <button type="submit" class="btn btn-danger btn-mg" id="user_search_btn" data-loading-text="<i class='fa fa-circle-o-not fa-spin'></i> searching..">
+          Search</button>
+      </div>
+      <div class="form-group pull-left">
+        <button type="button" class="btn btn-primary btn-mg" onclick="user_search_clear()">
+          Clear Search</button>
+      </div>
+    </form>
+    <button type="button" class="btn btn-primary btn-mg pull-right margin-lr" onclick="show_modal('upload_user_modal')">
+      Import CSV</button>
+    <button type="button" class="btn btn-primary btn-mg pull-right" onclick="show_modal('add_user_modal')">
+      Add User</button>
+  </div>
+
+  <div class="panel-body text-center">
+    <ul class="list-group text-left" id="user_list">
+      {{#each users}}
+      <li class="clearfix list-group-item{{#even-item}}{{/even-item}}">
+        <div class="btn-group-xs pull-right">
+          <button type="button" class="btn btn-default" onclick="show_modal('edit_user_modal','{{id}}')">Edit</button>
+          <button type="button" class="btn btn-danger" onclick="show_modal('delete_user_modal',&#123;'id'&#58;'{{id}}'&#44;'type'&#58;'{{type}}'&#125;)">Delete</button>
+        </div>
+        {{id}}
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="panel-footer text-center clearfix">
+    <div class="pull-right">
+      <button type="button" class="btn btn-default" onclick="user_list_prev()">&lt; Previous </button>
+      <button type="button" class="btn btn-default" onclick="user_list_next()"> Next &gt;</button>
+    </div>
+    <div id="user_list_footer_info">
+    </div>
+  </div>
+
+  <!--
+  --------------------------------------------------------
+  MODAL SECTION
+  --------------------------------------------------------
+  -->
+  <!----------------------------------------->
+  <div id="add_user_modal" class="modal fade text-left">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add User</h4>
+        </div>
+        <div class="modal-body">
+          <div id="add_user_info" class="margin-bottom">
+          </div>
+          <div class="well no-margin">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#add_stud_form" data-toggle="tab" onclick="user_active_form('add_stud_form')">
+                Student</a></li>
+              <li><a href="#add_teac_form" data-toggle="tab" onclick="user_active_form('add_teac_form')">
+                Teacher</a></li>
+            </ul>
+            <div class="tab-content margin-all">
+
+              <form id="add_stud_form" class="tab-pane fade in active">
+                <input type="hidden" class="form-control" name="type" value="student">
+                <div class="form-group">
+                    <label for="inputUserId">RRN</label>
+                    <input type="text" class="form-control" id="inputStudId" name="id" placeholder="RRN">
+                </div>
+                <div class="form-group">
+                    <label for="inputUserName">Name</label>
+                    <input type="text" class="form-control" id="inputStudName" name="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="inputUserBatch">Batch</label>
+                    <select class="form-control" id="selectStudBatch" name="batch">
+                      {{#each batches}}
+                        <option value="{{name}}">{{name}}</option>
+                      {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputUserDepartment">Department</label>
+                    <select class="form-control" id="selectStudDept" name="dept">
+                      {{#each dept}}
+                        <option value="{{name}}">{{name}}</option>
+                      {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputUserSection">Section</label>
+                    <select class="form-control" id="selectStudSection" name="section">
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="E">E</option>
+                      <option value="F">F</option>
+                      <option value="G">G</option>
+                      <option value="H">H</option>
+                      <option value="I">I</option>
+                      <option value="J">J</option>
+                    </select>
+                </div>
+                <div class="checkbox" id="divStudResetPasswd">
+                  <label><input type="checkbox" name="resetPasswd" value="1"> Reset Password</label>
+                </div>
+              </form>
+
+              <form id="add_teac_form" class="tab-pane fade">
+                <input type="hidden" class="form-control" name="type" value="teacher">
+                <div class="form-group">
+                    <label for="inputUserId">Staff ID</label>
+                    <input type="text" class="form-control" id="inputTeacId" name="id" placeholder="Staff ID">
+                </div>
+                <div class="form-group">
+                    <label for="inputUserName">Name</label>
+                    <input type="text" class="form-control" id="inputTeacName" name="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="inputUserDepartment">Department</label>
+                    <select class="form-control" id="selectTeacDept" name="dept">
+                      {{#each dept}}
+                        <option value="{{name}}">{{name}}</option>
+                      {{/each}}
+                    </select>
+                </div>
+                <div class="checkbox" id="divTeacResetPasswd">
+                  <label><input type="checkbox" name="resetPasswd" value="1"> Reset Password</label>
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary pull-left" onclick="$('#'+user_add_form).trigger('reset');">Clear</button>
+          <button type="submit" class="btn btn-primary" id="add_user_btn" data-loading-text="<i class='fa fa-circle-o-not  ch fa-spin'></i> please wait.."
+            onclick="add_user()">Add</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------------------------------------->
+  <div id="upload_user_modal" class="modal fade text-left">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Upload User Data</h4></div>
+          <div class="modal-body">
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-file"></span></span>
+              <input type="text" class="form-control" placeholder="Select a file to upload" id="uploadUserFile">
+              <span class="input-group-btn">
+                <span class="btn btn-default btn-file">Browse
+                <input type="file" name="user_csv" onchange="$('#uploadUserFile').val($(this).val());"></span>
+              </span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" onclick="uploadUserFile()">Upload</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!----------------------------------------->
+  <div id="edit_user_modal" class="modal fade text-left">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit User</h4>
+        </div>
+        <div class="modal-body">
+          <div class="well">
+            <div id="edit_user_info">
+              <div class="alert alert-info text-center">
+                <span><i class="fa fa-circle-o-notch fa-spin"></i> <strong>Loading..</strong></span>
+              </div>
+            </div>
+            <form id="edit_user_form">
+
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="edit_user_save_btn" data-loading-text="<i class='fa fa-circle-o-not  ch fa-spin'></i> please wait.."
+            onclick="submit_form_edit_user()">Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------------------------------------->
+
+  <div id="delete_user_modal" class="modal fade text-left">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Are you sure ?</h4>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="delete_user_id" value="">
+          <input type="hidden" id="delete_user_type" value="">
+          <p class="well">Are you want to delete the user ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="delete_user_btn" data-loading-text="<i class='fa fa-circle-o-not  ch fa-spin'></i> please wait.."
+            onclick="delete_user()">Delete</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

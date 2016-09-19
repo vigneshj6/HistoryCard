@@ -10,7 +10,6 @@ var db=require("./postgresql");
 //exports the module and functions defined here to main.js(refer main.js).
 //we recieve router object and session json from main.js
 module.exports = function(routes,session) {
-    
     // post request to /login
     routes.post('/',function(req,res){
         //check for user in post method

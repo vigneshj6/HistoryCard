@@ -24,26 +24,23 @@ module.exports = function(routes,session) {
     routes.get('/', function(req, res){
         console.log("admin "+req.session.user+" page request");//debug
         if(check(req.session.type)) {
-            var page = fs.readFileSync(path.join(__dirname,'/views/admin.html'));
             
-            var template = Handlebars.compile(page.toString());
-                
             var item_c = 0;
             
-            Handlebars.registerHelper('even-item', function() {
-                item_c += 1;
-                return item_c%2?" list-even":"";
-            });
-            
-            Handlebars.registerHelper('qo', function(options) {
-                return "'" + options.fn(this) + "'";
-            });
             db.getBatch(req.session.user,'history','',function(n,val){
                 var result={};
                 result["batch"] = val;
                 result["username"] = req.session.user;
-                var html = template(result);
-                res.send(html);
+                res.render('admin',{result,helpers: {
+                    "even-item" : function()
+                    {       item_c += 1;
+                            return item_c%2?" list-even":"";
+                    },
+                    'qo': function(options) {
+                            return "'" + options.fn(this) + "'";
+                    }
+                }
+                });
             });
         }
         else {
@@ -155,36 +152,37 @@ module.exports = function(routes,session) {
     });
     
     routes.get('/user-html', function(req, res){
-        if(check(req.session.type)){
-            
+        if(req.session.type){
+            console.dir(req.session)
             var batch_list = {};
             sync.fiber(function() {
                 sync.parallel(function(){
-                    
                     db.getCurBatch(req.session.user,'history','',sync.defer())
                     db.getDept(req.session.user,'history',sync.defer())
                     db.searchBothUser(req.session.user,'history','','both',0,{},sync.defer())
                     
                 });
-            var ans = sync.await();
-            batch_list["users"] = ans[2];
-            batch_list["dept"] = ans[1];
-            batch_list["batches"] = ans[0];
-            var page = fs.readFileSync(path.join(__dirname,'/views/admin_user.html'));
-            var template = Handlebars.compile(page.toString());
-            var item_c = 0;
-            
-            Handlebars.registerHelper('even-item', function() {
-                item_c += 1;
-                return item_c%2?" list-even":"";
-            });
-            Handlebars.registerHelper('qo', function(options) {
-                return "'" + options.fn(this) + "'";
-            });
-            var html = template(batch_list);
-            res.send(html);
+                var ans = sync.await();
+                batch_list["users"] = ans[2];
+                batch_list["dept"] = ans[1];
+                batch_list["batches"] = ans[0];
+                console.dir(batch_list)
+                var item_c = 0;
+                res.render('admin_user',{batch_list,helpers: {
+                    "even-item" : function()
+                    {       item_c += 1;
+                            return item_c%2?" list-even":"";
+                    },
+                    'qo': function(options) {
+                            return "'" + options.fn(this) + "'";
+                    }
+                }
+                });
             })
             
+        }
+        else{
+            res.send("error")
         }
     });
     

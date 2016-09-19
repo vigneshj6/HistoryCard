@@ -1,0 +1,101 @@
+<ul class="nav nav-tabs">
+	<li class="active"><a data-toggle="tab" href="#reportHcTab"><span class="glyphicon glyphicon-th-list"></span> History Cards</a></li>
+	<li><a data-toggle="tab" href="#uploadTab"><span class="glyphicon glyphicon-open"></span> Upload Data</a></li>
+	<li><a data-toggle="tab" href="#toolsTab"><span class="glyphicon glyphicon-wrench"></span> Tools</a></li>
+</ul>
+
+<div class="tab-content border-no-top margin-all">
+	<div id="reportHcTab" class="tab-pane fade in active">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-xs-4 control-label">Student : </label>
+				<div class="col-xs-6 selectContainer">
+					<select class="form-control" id="studList">
+          			</select>
+				</div>
+			</div>
+		</form>
+
+		<div class="panel panel-default clearfix no-margin">
+
+			<div class="panel-heading text-center">
+				<form class="form-inline margin-tb" id="facultyReportForm">
+					<div class="form-group">
+						<input type="text" class="form-control input-mg" placeholder="Semester" id="semesterInp">
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary btn-mg btn-block" id="loadReportBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading..">Check</button>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary btn-mg btn-block" id="prevReportBtn">Prev</button>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary btn-mg btn-block" id="nextReportBtn">Next</button>
+					</div>
+					<div class="form-group  pull-right">
+						<button type="button" class="btn btn-primary btn-mg btn-block" id="creditsBtn" data-toggle="popover" data-content="<span class='glyphicon glyphicon-repeat glyphicon-spin'></span> Loading..">Credits</button>
+					</div>
+					<div class="form-group pull-right margin-lr">
+						<button type="button" class="btn btn-primary btn-mg btn-block" id="cgpaBtn" data-toggle="popover" data-content="<span class='glyphicon glyphicon-repeat glyphicon-spin'></span> Loading..">CGPA</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="panel-body text-center">
+				<div class="table-responsive">
+					<table class="table table-bordered small no-margin">
+						<thead>
+							<tr>
+								<th>Subject Code</th>
+								<th>CAT-1 Mark</th>
+								<th>CAT-1 Attendence</th>
+								<th>CAT-2 Mark</th>
+								<th>CAT-2 Attendence</th>
+								<th>CAT-3 Mark</th>
+								<th>CAT-3 Attendence</th>
+								<th>Internals</th>
+								<th>Cummulative Attendence</th>
+								<th>Grade</th>
+								<th>No. of Arrear</th>
+								<th>No. of Redo</th>
+							</tr>
+						</thead>
+						<tbody id="reportHc">
+
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+			<div class="panel-footer text-center">
+			</div>
+
+		</div>
+
+	</div>
+
+	<div id="uploadTab" class="tab-pane fade">
+		<div class="panel-heading text-center row clearfix">
+			<form class="form-inline margin-tb" action="upload" method="post" enctype="multipart/form-data" id="uploadForm">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-file"></span></span>
+					<input type="text" class="form-control" placeholder="Select a file to upload" id="fileLbl">
+					<span class="input-group-btn">
+						<span class="btn btn-default btn-file">Browse
+							<input type="file" name="csvInp">
+						</span>
+					</span>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary">Upload</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="toolsTab" class="tab-pane fade">
+		This is tools div
+	</div>
+
+</div>
