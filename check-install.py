@@ -17,6 +17,7 @@ def shell_exec(cmd):
     status = p.wait();
     if status!=0:
         print '*** error please check ***';
+        return (False,"error");
     else :
         print str(cmd+'\n'+output+' executed!!!');
         completed = (True,output);
@@ -29,7 +30,7 @@ def check_postgresql():
         print 'postgresql not installed or not started yet. '
         print 'install postgresql and try'
         print 'command " sudo service postgresql start " to start. '
-        exit(0);
+        exit(1);
         
     else:
         print '# postgresql check done !'
@@ -41,7 +42,7 @@ def check_user():
     if not shell_exec(str("PGPASSWORD='"+passwd+"' psql -U "+username+" -h "+config['postgres']['host']+" postgres & exit"))[0]:
         print ' *** create user with super-user permission *** '
         print ' not installed correctly '
-        exit(1);
+        exit(0);
     else:
         print '# username check done !'
         return True;

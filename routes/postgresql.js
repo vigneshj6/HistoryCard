@@ -17,10 +17,16 @@ module.exports = {
         var credit_query=db.sql('init');
         console.log('working ... ');
         client.query('CREATE DATABASE "history"',function(er) {
-            var client = db.dbconnect('history');
-            var query = client.query(credit_query,function(err){
+            if(er){
+                console.dir(er);
+                throw er;
+            }
+            else{
+            var new_client = db.dbconnect('history');
+            new_client.query(credit_query,function(err){
             cb(err);
-        });
+            });
+        }
         });
         
     }

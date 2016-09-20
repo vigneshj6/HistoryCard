@@ -1,50 +1,5 @@
 --
--- PostgreSQL database dump
---
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'SQL_ASCII';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
-SET search_path = public, pg_catalog;
-
---
--- Name: db_to_csv(text); Type: FUNCTION; Schema: public; Owner: ramki
---
-
-CREATE FUNCTION db_to_csv(path text) RETURNS void
-    LANGUAGE plpgsql
-    AS $$
-declare
-   tables RECORD;
-   statement TEXT;
-begin
-FOR tables IN 
-   SELECT (table_schema || '.' || table_name) AS schema_table
-   FROM information_schema.tables t INNER JOIN information_schema.schemata s 
-   ON s.schema_name = t.table_schema 
-   WHERE t.table_schema NOT IN ('pg_catalog', 'information_schema', 'configuration')
-   AND t.table_type NOT IN ('VIEW')
-   ORDER BY schema_table
-LOOP
-   statement := 'COPY ' || tables.schema_table || ' TO ''' || path || '/' || tables.schema_table || '.csv' ||''' DELIMITER '';'' CSV HEADER';
-   EXECUTE statement;
-END LOOP;
-return;  
-end;
-$$;
-
-
-ALTER FUNCTION public.db_to_csv(path text) OWNER TO ramki;
-
-SET default_tablespace = '';
-
-SET default_with_oids = true;
-
---
--- Name: DEPARTMENT; Type: TABLE; Schema: public; Owner: ramki; Tablespace: 
+-- Name: DEPARTMENT; Type: TABLE; Schema: public; Tablespace: 
 --
 
 CREATE TABLE "DEPARTMENT" (
@@ -53,13 +8,10 @@ CREATE TABLE "DEPARTMENT" (
     "HOD" character varying
 );
 
-
-ALTER TABLE public."DEPARTMENT" OWNER TO ramki;
-
 SET default_with_oids = false;
 
 --
--- Name: FACULTY; Type: TABLE; Schema: public; Owner: ramki; Tablespace: 
+-- Name: FACULTY; Type: TABLE; Schema: public;  ; Tablespace: 
 --
 
 CREATE TABLE "FACULTY" (
@@ -73,11 +25,8 @@ CREATE TABLE "FACULTY" (
     "FACULTY_ADVISOR_BATCH" character varying
 );
 
-
-ALTER TABLE public."FACULTY" OWNER TO ramki;
-
 --
--- Name: STUDENT; Type: TABLE; Schema: public; Owner: ramki; Tablespace: 
+-- Name: STUDENT; Type: TABLE; Schema: public;  ; Tablespace: 
 --
 
 CREATE TABLE "STUDENT" (
@@ -95,11 +44,8 @@ CREATE TABLE "STUDENT" (
     "DEPARTMENT" character varying
 );
 
-
-ALTER TABLE public."STUDENT" OWNER TO ramki;
-
 --
--- Name: STUDENT_DEPARTMENT_seq; Type: SEQUENCE; Schema: public; Owner: ramki
+-- Name: STUDENT_DEPARTMENT_seq; Type: SEQUENCE; Schema: public;  
 --
 
 CREATE SEQUENCE "STUDENT_DEPARTMENT_seq"
@@ -109,18 +55,15 @@ CREATE SEQUENCE "STUDENT_DEPARTMENT_seq"
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public."STUDENT_DEPARTMENT_seq" OWNER TO ramki;
-
 --
--- Name: STUDENT_DEPARTMENT_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ramki
+-- Name: STUDENT_DEPARTMENT_seq; Type: SEQUENCE OWNED BY; Schema: public;  
 --
 
 ALTER SEQUENCE "STUDENT_DEPARTMENT_seq" OWNED BY "STUDENT"."DEPARTMENT";
 
 
 --
--- Name: TEACH_SUBJECT; Type: TABLE; Schema: public; Owner: ramki; Tablespace: 
+-- Name: TEACH_SUBJECT; Type: TABLE; Schema: public;  ; Tablespace: 
 --
 
 CREATE TABLE "TEACH_SUBJECT" (
@@ -132,11 +75,8 @@ CREATE TABLE "TEACH_SUBJECT" (
     "SEMESTER" integer
 );
 
-
-ALTER TABLE public."TEACH_SUBJECT" OWNER TO ramki;
-
 --
--- Name: TEACH_SUBJECT_SECTION_seq; Type: SEQUENCE; Schema: public; Owner: ramki
+-- Name: TEACH_SUBJECT_SECTION_seq; Type: SEQUENCE; Schema: public;  
 --
 
 CREATE SEQUENCE "TEACH_SUBJECT_SECTION_seq"
@@ -146,18 +86,15 @@ CREATE SEQUENCE "TEACH_SUBJECT_SECTION_seq"
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public."TEACH_SUBJECT_SECTION_seq" OWNER TO ramki;
-
 --
--- Name: TEACH_SUBJECT_SECTION_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ramki
+-- Name: TEACH_SUBJECT_SECTION_seq; Type: SEQUENCE OWNED BY; Schema: public;  
 --
 
 ALTER SEQUENCE "TEACH_SUBJECT_SECTION_seq" OWNED BY "TEACH_SUBJECT"."SECTION";
 
 
 --
--- Name: batch; Type: TABLE; Schema: public; Owner: ramki; Tablespace: 
+-- Name: batch; Type: TABLE; Schema: public;  ; Tablespace: 
 --
 
 CREATE TABLE batch (
@@ -169,10 +106,8 @@ CREATE TABLE batch (
 );
 
 
-ALTER TABLE public.batch OWNER TO ramki;
-
 --
--- Name: login; Type: TABLE; Schema: public; Owner: ramki; Tablespace: 
+-- Name: login; Type: TABLE; Schema: public;  ; Tablespace: 
 --
 
 CREATE TABLE login (
@@ -182,11 +117,8 @@ CREATE TABLE login (
     "DB" character varying(16) NOT NULL
 );
 
-
-ALTER TABLE public.login OWNER TO ramki;
-
 --
--- Name: DEPARTMENT_pkey; Type: CONSTRAINT; Schema: public; Owner: ramki; Tablespace: 
+-- Name: DEPARTMENT_pkey; Type: CONSTRAINT; Schema: public;  ; Tablespace: 
 --
 
 ALTER TABLE ONLY "DEPARTMENT"
@@ -194,7 +126,7 @@ ALTER TABLE ONLY "DEPARTMENT"
 
 
 --
--- Name: FACULTY_pkey; Type: CONSTRAINT; Schema: public; Owner: ramki; Tablespace: 
+-- Name: FACULTY_pkey; Type: CONSTRAINT; Schema: public;  ; Tablespace: 
 --
 
 ALTER TABLE ONLY "FACULTY"
@@ -202,7 +134,7 @@ ALTER TABLE ONLY "FACULTY"
 
 
 --
--- Name: STUDENT_pkey; Type: CONSTRAINT; Schema: public; Owner: ramki; Tablespace: 
+-- Name: STUDENT_pkey; Type: CONSTRAINT; Schema: public;  ; Tablespace: 
 --
 
 ALTER TABLE ONLY "STUDENT"
@@ -210,7 +142,7 @@ ALTER TABLE ONLY "STUDENT"
 
 
 --
--- Name: TEACH_SUBJECT_pkey; Type: CONSTRAINT; Schema: public; Owner: ramki; Tablespace: 
+-- Name: TEACH_SUBJECT_pkey; Type: CONSTRAINT; Schema: public;  ; Tablespace: 
 --
 
 ALTER TABLE ONLY "TEACH_SUBJECT"
@@ -218,7 +150,7 @@ ALTER TABLE ONLY "TEACH_SUBJECT"
 
 
 --
--- Name: batch_pkey; Type: CONSTRAINT; Schema: public; Owner: ramki; Tablespace: 
+-- Name: batch_pkey; Type: CONSTRAINT; Schema: public;  ; Tablespace: 
 --
 
 ALTER TABLE ONLY batch
@@ -226,7 +158,7 @@ ALTER TABLE ONLY batch
 
 
 --
--- Name: login_pkey; Type: CONSTRAINT; Schema: public; Owner: ramki; Tablespace: 
+-- Name: login_pkey; Type: CONSTRAINT; Schema: public;  ; Tablespace: 
 --
 
 ALTER TABLE ONLY login
@@ -246,3 +178,4 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
+INSERT INTO "login" VALUES('Admin1','enter',3,'history');

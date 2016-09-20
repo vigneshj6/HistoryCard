@@ -111,7 +111,7 @@ function db(db){
     }
     else
     {
-        conString = "pg://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+":5432/"+config.postgres.db;
+        conString = "pg://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+":5432/";
     }
     var client = new pg.Client(conString);
     client.connect();
