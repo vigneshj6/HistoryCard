@@ -5,7 +5,7 @@
 	,
 	"postgres": {
 		"db"       : "history",
-		"user"     : "admin",
+		"user"     : "postgres",
 		"password" : "enter",
 		"host"     : "localhost"
 	}
