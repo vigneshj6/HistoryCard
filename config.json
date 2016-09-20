@@ -6,7 +6,7 @@
 	"postgres": {
 		"db"       : "history",
 		"user"     : "admin",
-		"password" : "root",
+		"password" : "enter",
 		"host"     : "localhost"
 	}
 }

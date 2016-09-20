@@ -17,7 +17,7 @@ def shell_exec(cmd):
     status = p.wait();
     if status!=0:
         print '*** error please check ***';
-        return (False,"error");
+        completed = (False,"error");
     else :
         print str(cmd+'\n'+output+' executed!!!');
         completed = (True,output);
@@ -42,7 +42,7 @@ def check_user():
     if not shell_exec(str("PGPASSWORD='"+passwd+"' psql -U "+username+" -h "+config['postgres']['host']+" postgres & exit"))[0]:
         print ' *** create user with super-user permission *** '
         print ' not installed correctly '
-        exit(0);
+        exit(1);
     else:
         print '# username check done !'
         return True;
@@ -62,6 +62,7 @@ def check_user_permission():
             return True;
         else:
             print ' *** create user with super-user permission *** '
+            print ' UPDATE the username and password in config.json !!!'
             print ' not installed correctly '
             exit(1);
 if __name__ == "__main__":
@@ -75,3 +76,6 @@ if __name__ == "__main__":
                 exit(1);
             else :
                 print 'success!!!'
+                print 'RUN install-db.js file'
+                print 'by using following command'
+                print 'node install-db '
