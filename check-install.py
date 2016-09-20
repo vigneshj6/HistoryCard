@@ -28,7 +28,7 @@ def check_postgresql():
     if not shell_exec("psql -c \"\du\"")[0]:
         
         print 'postgresql not installed or not started yet. '
-        print 'install postgresql and try'
+        print 'install postgresql "sudo apt-get install postgresql postgresql-contrib"'
         print 'command " sudo service postgresql start " to start. '
         exit(1);
         
