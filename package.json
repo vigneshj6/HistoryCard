@@ -5,8 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "install": "python check-install.py"
-    },
+  },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -15,6 +16,7 @@
     "express-handlebars": "~3.0.0",
     "fs": "0.0.1-security",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "synchronize": "^2.0.0"
   }
 }
