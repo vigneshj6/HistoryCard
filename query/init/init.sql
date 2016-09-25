@@ -9,6 +9,15 @@ CREATE TABLE "DEPARTMENT" (
 );
 
 SET default_with_oids = false;
+COPY "DEPARTMENT" ("DEPARTMENT_ID", "DEPARTMENT_NAME", "HOD") FROM stdin;
+CSE	Computer Science and Engineering	2002_F
+ECE	Electronics and Communications Engineering	2003_F
+MECH	Mechanical Engineering	2004_F
+EEE	Electrical and Electronics Engineering	2005_F
+AERO	Aeronautical Engineering	2006_F
+POLY	Polymer Engineering	2007_F
+\.
+
 
 --
 -- Name: FACULTY; Type: TABLE; Schema: public;  ; Tablespace: 
