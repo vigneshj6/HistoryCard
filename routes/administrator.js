@@ -30,8 +30,9 @@ module.exports = function(routes,session) {
             db.getBatch(req.session.user,'history','',function(n,val){
                 var result={};
                 result["batch"] = val;
+                console.dir(result)
                 result["username"] = req.session.user;
-                res.render('admin',{result,helpers: {
+                result["helpers"]={
                     "even-item" : function()
                     {       item_c += 1;
                             return item_c%2?" list-even":"";
@@ -39,8 +40,8 @@ module.exports = function(routes,session) {
                     'qo': function(options) {
                             return "'" + options.fn(this) + "'";
                     }
-                }
-                });
+                };
+                res.render('admin',result);
             });
         }
         else {
@@ -166,9 +167,8 @@ module.exports = function(routes,session) {
                 batch_list["users"] = ans[2];
                 batch_list["dept"] = ans[1];
                 batch_list["batches"] = ans[0];
-                console.dir(batch_list)
                 var item_c = 0;
-                res.render('admin_user',{batch_list,helpers: {
+                batch_list["helpers"]={
                     "even-item" : function()
                     {       item_c += 1;
                             return item_c%2?" list-even":"";
@@ -176,8 +176,8 @@ module.exports = function(routes,session) {
                     'qo': function(options) {
                             return "'" + options.fn(this) + "'";
                     }
-                }
-                });
+                };
+                res.render('admin_user',batch_list);
             })
             
         }
@@ -325,27 +325,21 @@ module.exports = function(routes,session) {
     routes.get("/subject-html", function(req, res) {
         var batch_list = {};
         if(check(req.session.type)) {
-            var page = fs.readFileSync(path.join(__dirname,'/views/admin_subject.html'));
             
             db.getCurBatch(req.session.user,'history','',function(n, val) {
                 if(val){
                     batch_list["batches"]=val;
-                    var template = Handlebars.compile(page.toString());
-            
                     var item_c = 0;
-            
-                    Handlebars.registerHelper('even-item', function() {
-                        item_c += 1;
-                        return item_c%2?" list-even":"";
-                    });
-            
-                    Handlebars.registerHelper('qo', function(options) {
-                        return "'" + options.fn(this) + "'";
-                    });
-            
-                    var html = template(batch_list);
-                
-                    res.send(html);
+                    batch_list["helpers"]={
+                    "even-item" : function()
+                    {       item_c += 1;
+                            return item_c%2?" list-even":"";
+                    },
+                    'qo': function(options) {
+                            return "'" + options.fn(this) + "'";
+                    }
+                    };
+                    res.render('admin_subject',batch_list);
                 }
                 else{
                     res.send(404);
@@ -446,19 +440,17 @@ module.exports = function(routes,session) {
             batch_list["users"] = ans[2];
             batch_list["dept"] = ans[1];
             batch_list["batches"] = ans[0];
-            var page = fs.readFileSync(path.join(__dirname,'/views/admin_assign.html'));
-            var template = Handlebars.compile(page.toString());
             var item_c = 0;
-            
-            Handlebars.registerHelper('even-item', function() {
-                item_c += 1;
-                return item_c%2?" list-even":"";
-            });
-            Handlebars.registerHelper('qo', function(options) {
-                return "'" + options.fn(this) + "'";
-            });
-            var html = template(batch_list);
-            res.send(html);
+            batch_list["helpers"]={
+                    "even-item" : function()
+                    {       item_c += 1;
+                            return item_c%2?" list-even":"";
+                    },
+                    'qo': function(options) {
+                            return "'" + options.fn(this) + "'";
+                    }
+                };
+            res.render('admin_assign',batch_list);
             });
             
         }

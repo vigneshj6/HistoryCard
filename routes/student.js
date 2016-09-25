@@ -24,21 +24,12 @@ module.exports = function(routes,session) {
     // "/" to display user.html as it is in student route already 
     routes.get('/', function(req, res){
 
-        console.log("student "+req.session.user+"page request");//debug
+        console.log("student "+req.session.user+" page request");//debug
 
         if(check(req.session.type)) {
-
-            //load file in sync (i.e: will not skip this line and thread to other event)
-            var user_page = fs.readFileSync(path.join(__dirname,'/views/student.html'));
-
-            //compile with handlebars
-            var template = handlebars.compile(user_page.toString());
-
             //render given value to the specified place using key
-            var html = template({username:req.session.user});
-
-            //send to the client
-            res.send(html);
+            var data = {username:req.session.user};
+            res.render('student',data);
 
         }
 

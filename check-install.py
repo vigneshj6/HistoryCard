@@ -16,10 +16,10 @@ def shell_exec(cmd):
     (output, err) = p.communicate()
     status = p.wait();
     if status!=0:
-        print '*** error please check ***';
+        print ('*** error please check ***');
         completed = (False,"error");
     else :
-        print str(cmd+'\n'+output+' executed!!!');
+        print (str(cmd+'\n'+output+' executed!!!'));
         completed = (True,output);
     return completed;
 
@@ -27,24 +27,24 @@ def check_postgresql():
     
     if not shell_exec("psql -c \"\du\"")[0]:
         
-        print 'postgresql not installed or not started yet. '
-        print 'install postgresql "sudo apt-get install postgresql postgresql-contrib"'
-        print 'command " sudo service postgresql start " to start. '
+        print ('postgresql not installed or not started yet. ')
+        print ('install postgresql "sudo apt-get install postgresql postgresql-contrib"')
+        print ('command " sudo service postgresql start " to start. ')
         exit(1);
         
     else:
-        print '# postgresql check done !'
+        print ('# postgresql check done !')
         return True
 def check_user():
     username = config['postgres']['user'];
     passwd = config['postgres']['password'];
     db = config['postgres']['db'];
     if not shell_exec(str("PGPASSWORD='"+passwd+"' psql -U "+username+" -h "+config['postgres']['host']+" postgres & exit"))[0]:
-        print ' *** create user with super-user permission *** '
-        print ' not installed correctly '
+        print (' *** create user with super-user permission *** ')
+        print (' not installed correctly ')
         exit(1);
     else:
-        print '# username check done !'
+        print ('# username check done !')
         return True;
 
 def check_user_permission():
@@ -58,12 +58,12 @@ def check_user_permission():
             if 't' in i:
                 count = count + 1;
         if count > 5 :
-            print '# permission check done !';
+            print ('# permission check done !');
             return True;
         else:
-            print ' *** create user with super-user permission *** '
-            print ' UPDATE the username and password in config.json !!!'
-            print ' not installed correctly '
+            print (' *** create user with super-user permission *** ')
+            print (' UPDATE the username and password in config.json !!!')
+            print (' not installed correctly ')
             exit(1);
 if __name__ == "__main__":
     if not check_postgresql() :
@@ -75,7 +75,7 @@ if __name__ == "__main__":
             if not check_user_permission() :
                 exit(1);
             else :
-                print 'success!!!'
-                print 'RUN install-db.js file'
-                print 'by using following command'
-                print 'node install-db '
+                print ('success!!!');
+                print ('RUN install-db.js file')
+                print ('by using following command')
+                print ('node install-db ')

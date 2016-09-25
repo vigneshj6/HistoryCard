@@ -3,7 +3,7 @@ install nodejs
 <br>
 install npm
 <br>
-install python 2.7
+install python 3
 <br>
 install postgresql postgresql-contrib
 <br>

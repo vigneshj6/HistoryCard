@@ -22,32 +22,20 @@ module.exports = function(routes,session) {
     routes.get('/', function(req, res){
         console.log("teacher "+req.session.user+"page request");//debug
         if(check(req.session.type)) {
-            //load file in sync (i.e: will not skip this line and thread to other event)
-            var user_page = fs.readFileSync(path.join(__dirname,'/views/teacher.html'));
-            //compile with handlebars
-            var template = handlebars.compile(user_page.toString());
-            //render given value to the specified place using key
+            
             var data={};
-            /*
-            db.faculty_db('2010_34',req.session.db,function(val){
+            var querydata = {};
+            querydata.id = req.session.user;
+            querydata.type = 'facultyAdv'
+            db.get_stud_list(req.session.user,'history',querydata,function(val){
+                if(val == {}){
+                }
+                else{
                 console.dir(val);
-                req.session.class_adv_db =val['BATCH'];
-                */
-                var querydata = {};
-                querydata.id = req.session.user;
-                querydata.type = 'facultyAdv'
-                db.get_stud_list(req.session.user,'history',querydata,function(val){
-                    if(val == {}){
-                        
-                    }
-                    else{
-                    console.dir(val);
-                    data['student'] = val;
-                    data.username=req.session.user;
-                    }
-                    var html = template(data);
-                    //send to the client
-                    res.send(html);
+                data['student'] = val;
+                data.username=req.session.user;
+                }
+                res.render('teacher',data);
                 });
             //});
         }

@@ -95,7 +95,7 @@
                     <label for="inputUserBatch">Batch</label>
                     <select class="form-control" id="selectStudBatch" name="batch">
                       {{#each batches}}
-                        <option value="{{name}}">{{name}}</option>
+                        <option value="{{this.name}}">{{this.name}}</option>
                       {{/each}}
                     </select>
                 </div>
@@ -103,7 +103,7 @@
                     <label for="inputUserDepartment">Department</label>
                     <select class="form-control" id="selectStudDept" name="dept">
                       {{#each dept}}
-                        <option value="{{name}}">{{name}}</option>
+                        <option value="{{this.name}}">{{this.name}}</option>
                       {{/each}}
                     </select>
                 </div>
@@ -141,7 +141,7 @@
                     <label for="inputUserDepartment">Department</label>
                     <select class="form-control" id="selectTeacDept" name="dept">
                       {{#each dept}}
-                        <option value="{{name}}">{{name}}</option>
+                        <option value="{{this.name}}">{{this.name}}</option>
                       {{/each}}
                     </select>
                 </div>
