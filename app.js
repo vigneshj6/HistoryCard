@@ -93,7 +93,7 @@ app.get('/', function(req, res){
     }
     else{
       console.log("index page request");
-      res.render('layouts/index');
+      res.render('index');
     }
       
   });

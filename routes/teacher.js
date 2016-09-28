@@ -1,10 +1,4 @@
 var db = require("./postgresql");
-//import module fs(file system)
-var fs = require("fs");
-//import handlebars to render
-var handlebars = require("handlebars");
-//to set path import path module
-var path = require("path");
 //future use
 var curr='/teacher';
 
@@ -45,11 +39,32 @@ module.exports = function(routes,session) {
         }
       
     });
-    routes.get('/report',function(req, res) {
+    routes.get('/dashboard-html', function(req, res) {
+    console.log("HTTP GET request to - /dashboard-html");
+
+    if(req.session.user) {
+        if(req.query.role === "facultyAdv") {
+            res.render('teacher-faculty');
+        }
+        else if(req.query.role === "classAdv") {
+            res.render('teacher-class')
+        }
+        else if(req.query.role === "subTeach") {
+            res.render('teacher-subject')
+        }
+        else {
+            res.send(404);
+        }
+    }
+    else {
+        res.send(404);
+    }
+    });
+    routes.get('/report-hc',function(req, res) {
        if(check(req.session.type)){//check valid login or valid user
             console.log(req.session.user+" AJAX /teacher/report");//debug
             //refer postgresql.js
-            db.student_mark(req.query.rrn,req.query.sem,'2013-2017',function(result){
+            db.student_mark(req.query.rrn,req.query.sem,'history',function(result){
                 if(result){
                     res.status(200).send(result);
                 }
@@ -73,7 +88,7 @@ module.exports = function(routes,session) {
             });
         } 
     });
-    routes.get('/credits',function(req,res){
+    routes.get('/report-credits',function(req,res){
         if(check(req.session.type)){//check user
             console.log(req.query.rrn+" AJAX /teacher/credits");//debug
             //refer postgresql.js
@@ -91,7 +106,7 @@ module.exports = function(routes,session) {
         }
     });
     //AJAX request /cgpa to get cgpa
-    routes.get('/cgpa',function(req,res){
+    routes.get('/report-cgpa',function(req,res){
         console.log(req.query.rrn+" AJAX /teacher/cgpa");
         db.cgpa(req.query.rrn,8,'2013-2017',function(x,result){
             if(result){
@@ -108,7 +123,7 @@ module.exports = function(routes,session) {
     routes.get("/role-list", function(req, res) {
         if(check(req.session.type)) {
             var data = {};
-            data["id"]=req.session.user;
+            data.id=req.session.user;
             sync.fiber(function() {
               sync.parallel(function(){
                    
@@ -140,7 +155,7 @@ module.exports = function(routes,session) {
                 }
                 else{
                 console.dir(val);
-                data['student'] = val;
+                data['stud'] = val;
                 data.username=req.session.user;
                 res.send(data);
                 }
