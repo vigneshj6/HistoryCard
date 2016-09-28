@@ -10,7 +10,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; : 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
@@ -40,7 +40,7 @@ COMMENT ON EXTENSION postgres_fdw IS 'foreign-data wrapper for remote PostgreSQL
 SET search_path = public, pg_catalog;
 
 --
--- Name: db_to_csv(text); Type: FUNCTION; Schema: public;  
+-- Name: db_to_csv(text); Type: FUNCTION; Schema: public; Owner: ramki
 --
 
 
@@ -49,6 +49,27 @@ CREATE SERVER app_db FOREIGN DATA WRAPPER postgres_fdw OPTIONS (
     host 'localhost'
 );
 
+
+ALTER SERVER app_db OWNER TO norm;
+
+--
+-- Name: USER MAPPING norm SERVER app_db; Type: USER MAPPING; Schema: -; Owner: norm
+--
+
+CREATE USER MAPPING FOR norm SERVER app_db OPTIONS (
+    password 'hello',
+    "user" 'norm'
+);
+
+
+--
+-- Name: USER MAPPING ramki SERVER app_db; Type: USER MAPPING; Schema: -; Owner: norm
+--
+
+CREATE USER MAPPING FOR ramki SERVER app_db OPTIONS (
+    password 'enter',
+    "user" 'ramki'
+);
 
 
 SET default_tablespace = '';
@@ -68,6 +89,8 @@ CREATE TABLE "CAT1_TABLE" (
 );
 
 
+ALTER TABLE public."CAT1_TABLE" OWNER TO norm;
+
 --
 -- Name: CAT2_TABLE; Type: TABLE; Schema: public; Owner: norm; Tablespace: 
 --
@@ -81,6 +104,8 @@ CREATE TABLE "CAT2_TABLE" (
 );
 
 
+ALTER TABLE public."CAT2_TABLE" OWNER TO norm;
+
 --
 -- Name: CAT3_TABLE; Type: TABLE; Schema: public; Owner: norm; Tablespace: 
 --
@@ -93,6 +118,8 @@ CREATE TABLE "CAT3_TABLE" (
     "SEM_TAKEN" integer
 );
 
+
+ALTER TABLE public."CAT3_TABLE" OWNER TO norm;
 
 --
 -- Name: COURSE; Type: TABLE; Schema: public; Owner: norm; Tablespace: 
@@ -109,6 +136,8 @@ CREATE TABLE "COURSE" (
 );
 
 
+ALTER TABLE public."COURSE" OWNER TO norm;
+
 --
 -- Name: INTERNALS; Type: TABLE; Schema: public; Owner: norm; Tablespace: 
 --
@@ -122,6 +151,8 @@ CREATE TABLE "INTERNALS" (
 );
 
 
+ALTER TABLE public."INTERNALS" OWNER TO norm;
+
 --
 -- Name: MARK_SCHEME; Type: TABLE; Schema: public; Owner: norm; Tablespace: 
 --
@@ -131,6 +162,8 @@ CREATE TABLE "MARK_SCHEME" (
     "POINTS" numeric
 );
 
+
+ALTER TABLE public."MARK_SCHEME" OWNER TO norm;
 
 --
 -- Name: STUDENT; Type: FOREIGN TABLE; Schema: public; Owner: norm; Tablespace: 
@@ -156,6 +189,8 @@ OPTIONS (
 );
 
 
+ALTER FOREIGN TABLE public."STUDENT" OWNER TO norm;
+
 --
 -- Name: SUBJECT; Type: TABLE; Schema: public; Owner: norm; Tablespace: 
 --
@@ -167,6 +202,8 @@ CREATE TABLE "SUBJECT" (
 );
 
 
+ALTER TABLE public."SUBJECT" OWNER TO norm;
+
 --
 -- Name: TEACHING; Type: TABLE; Schema: public; Owner: norm; Tablespace: 
 --
@@ -177,6 +214,8 @@ CREATE TABLE "TEACHING" (
     "FACULTY_ID" character varying NOT NULL
 );
 
+
+ALTER TABLE public."TEACHING" OWNER TO norm;
 
 --
 -- Name: CAT1_TABLE_pkey; Type: CONSTRAINT; Schema: public; Owner: norm; Tablespace: 

@@ -9,7 +9,6 @@ CREATE TABLE "DEPARTMENT" (
 );
 
 SET default_with_oids = false;
-COPY "DEPARTMENT" ("DEPARTMENT_ID", "DEPARTMENT_NAME", "HOD") FROM stdin;
 
 INSERT INTO "DEPARTMENT" VALUES ('CSE', 'Computer Science and Engineering', '2002_F');
 INSERT INTO "DEPARTMENT" VALUES ('ECE', 'Electronics and Communications Engineering', '2003_F');
