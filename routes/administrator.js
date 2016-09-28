@@ -544,7 +544,7 @@ module.exports = function(routes,session) {
     });
     routes.post('/assign-deassign', function(req, res) {
         if(check(req.session.type)) {
-            if(req.body.role=="Class Advisor"){
+            if(req.body.role=="classAdv"){
                 db.deassignClassadv(req.session.user,'history',req.body,function(n,val){
                     
                     if(val){
@@ -556,7 +556,7 @@ module.exports = function(routes,session) {
                     }
             });
             }
-            else if(req.body.role=="Faculty Advisor"){
+            else if(req.body.role=="facultyAdv"){
                 db.deassignFacadv(req.session.user,'history',req.body,function(n,val){
                     
                     if(val){
@@ -568,7 +568,7 @@ module.exports = function(routes,session) {
                     }
             });
             }
-            else if(req.body.role=="Subject Teacher"){
+            else if(req.body.role=="subTeach"){
                 var result;
                 db.deassignSubjectBatch(req.session.user,req.body.batch,req.body,function(val){ result = val["error_text"]});
                 db.deassignSubjectHistory(req.session.user,'history',req.body,function(val){
@@ -581,6 +581,9 @@ module.exports = function(routes,session) {
                         res.send(val);
                     }
                 });
+            }
+            else {
+                res.send(404)
             }
         }
     });
