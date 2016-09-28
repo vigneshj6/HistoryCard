@@ -7,99 +7,117 @@ var config = require('../config.json');
 // loading sql query as string.
 var init = fs.readFileSync('./query/init/init.sql').toString();
 
-var student_cat = fs.readFileSync('./query/join_query.sql').toString();
-
-var gpa_sql = fs.readFileSync('./query/gpa_query.sql').toString();
-
-var sem_credits = fs.readFileSync('./query/credit.sql').toString();
-
 var login = fs.readFileSync('./query/login.sql').toString();
 
-var sem_credits_all = fs.readFileSync('./query/credit_all.sql').toString();
+//----------------------------- Admin/Assign ----------------------------------------------
 
-var cgpa_sql = fs.readFileSync('./query/cgpa.sql').toString();
 
-var class_adv_stu = fs.readFileSync('./query/classadv_stu.sql').toString();
+var assign_classadv = fs.readFileSync('./query/admin/assign/assign_new_classadv.sql').toString();
 
-var fac_adv_stu = fs.readFileSync('./query/faculty_stud.sql').toString();
+var assign_facadv = fs.readFileSync('./query/admin/assign/assign_new_facadv.sql').toString();
 
-var subj_tech_stu = fs.readFileSync('./query/sub_stud.sql').toString();
+var setSubjectHistory = fs.readFileSync('./query/admin/assign/assign_subject_history.sql').toString();
 
-var fossgraph = fs.readFileSync('./query/foss.sql').toString();
+var setSubjectBatch = fs.readFileSync('./query/admin/assign/assign_subject_batch.sql').toString();
 
-var all_batch = fs.readFileSync('./query/all_batch.sql').toString();
+var assign_class_check = fs.readFileSync('./query/admin/assign/classadv_check.sql').toString();
 
-var batch = fs.readFileSync('./query/batch.sql').toString();
+var deassign_classadv = fs.readFileSync('./query/admin/assign/deassign_classadv.sql').toString();
 
-var dept = fs.readFileSync('./query/dept.sql').toString();
+var deassign_facadv = fs.readFileSync('./query/admin/assign/deassign_facadv.sql').toString();
 
-var search_batch = fs.readFileSync('./query/search_query.sql').toString();
+var deassign_subj_hist = fs.readFileSync('./query/admin/assign/deassign_subj_hist.sql').toString();
 
-var createDB = fs.readFileSync('./query/ddl/db.sql').toString();
+var deassign_subj_batch = fs.readFileSync('./query/admin/assign/deassign_subj_batch.sql').toString();
 
-var createTable = fs.readFileSync('./query/ddl/tables.sql').toString();
+var display_student = fs.readFileSync('./query/admin/assign/display_stud.sql').toString();
 
-var drop = fs.readFileSync('./query/ddl/drop.sql').toString();
+var assign_fac_check = fs.readFileSync('./query/admin/assign/facadv_check.sql').toString();
 
-var edit_batch = fs.readFileSync('./query/ddl/edit_batch.sql').toString();
+var show_classadv = fs.readFileSync('./query/admin/assign/show_classadv.sql').toString();
 
-var backup = fs.readFileSync('./query/backup.sql').toString();
+var show_facadv = fs.readFileSync('./query/admin/assign/show_facadv.sql').toString();
 
-var show_tables = fs.readFileSync('./query/show_tables.sql').toString();
+var show_subj = fs.readFileSync('./query/admin/assign/show_subj.sql').toString();
 
-var search_both = fs.readFileSync('./query/search_both.sql').toString();
+//------------------------------ Admin/Backup ----------------------------------------------
 
-var add_student = fs.readFileSync('./query/add_student.sql').toString();
+var createDB = fs.readFileSync('./query/admin/backup/db.sql').toString();
 
-var add_teacher = fs.readFileSync('./query/add_teacher.sql').toString();
+var drop = fs.readFileSync('./query/admin/backup/drop.sql').toString();
 
-var edit_student = fs.readFileSync('./query/edit_student.sql').toString();
+var show_tables = fs.readFileSync('./query/admin/backup/show_tables.sql').toString();
 
-var edit_teacher = fs.readFileSync('./query/edit_teacher.sql').toString();
+var createTable = fs.readFileSync('./query/admin/backup/tables.sql').toString();
 
-var delete_student = fs.readFileSync('./query/delete_student.sql').toString();
+//------------------------------- Admin/Batch -----------------------------------------------
 
-var delete_teacher = fs.readFileSync('./query/delete_teacher.sql').toString();
+var batch = fs.readFileSync('./query/admin/batch/batch.sql').toString();
 
-var search_subject = fs.readFileSync('./query/search_subject.sql').toString();
+var cur_batch = fs.readFileSync('./query/admin/batch/cur_batch.sql').toString();
 
-var add_subject = fs.readFileSync('./query/add_subject.sql').toString();
+var edit_batch = fs.readFileSync('./query/admin/batch/edit_batch.sql').toString();
 
-var delete_subject = fs.readFileSync('./query/delete_subject.sql').toString();
+var search_batch = fs.readFileSync('./query/admin/batch/search_query.sql').toString();
 
-var edit_subject = fs.readFileSync('./query/edit_subject.sql').toString();
+//------------------------------- Admin/dept ------------------------------------------------
 
-var assign_class_check = fs.readFileSync('./query/assign/classadv_check.sql').toString();
+var dept = fs.readFileSync('./query/admin/dept/dept.sql').toString();
 
-var assign_fac_check = fs.readFileSync('./query/assign/facadv_check.sql').toString();
+//------------------------------- Admin/subject ---------------------------------------------
 
-var assign_classadv = fs.readFileSync('./query/assign/assign_new_classadv.sql').toString();
+var delete_subject = fs.readFileSync('./query/admin/subject/delete_subject.sql').toString();
 
-var assign_facadv = fs.readFileSync('./query/assign/assign_new_facadv.sql').toString();
+var edit_subject = fs.readFileSync('./query/admin/subject/edit_subject.sql').toString();
 
-var display_student = fs.readFileSync('./query/assign/display_stud.sql').toString();
+var add_subject = fs.readFileSync('./query/admin/subject/add_subject.sql').toString();
 
-var classadv_DB = fs.readFileSync('./query/classadv_DB.sql').toString();
+var search_subject = fs.readFileSync('./query/admin/subject/search_subject.sql').toString();
 
-var resetPasswd = fs.readFileSync('./query/edit_pass.sql').toString();  
+//-------------------------------- Admin/user  -----------------------------------------------
 
-var show_classadv = fs.readFileSync('./query/assign/show_classadv.sql').toString();
 
-var show_facadv = fs.readFileSync('./query/assign/show_facadv.sql').toString();
+var add_student = fs.readFileSync('./query/admin/user/add_student.sql').toString();
 
-var show_subj = fs.readFileSync('./query/assign/show_subj.sql').toString();
+var add_teacher = fs.readFileSync('./query/admin/user/add_teacher.sql').toString();
 
-var setSubjectHistory = fs.readFileSync('./query/assign/assign_subject_history.sql').toString();
+var delete_student = fs.readFileSync('./query/admin/user/delete_student.sql').toString();
 
-var setSubjectBatch = fs.readFileSync('./query/assign/assign_subject_batch.sql').toString();
+var delete_teacher = fs.readFileSync('./query/admin/user/delete_teacher.sql').toString();
 
-var deassign_classadv = fs.readFileSync('./query/assign/deassign_classadv.sql').toString();
+var edit_student = fs.readFileSync('./query/admin/user/edit_student.sql').toString();
 
-var deassign_facadv = fs.readFileSync('./query/assign/deassign_facadv.sql').toString();
+var edit_teacher = fs.readFileSync('./query/admin/user/edit_teacher.sql').toString();
 
-var deassign_subj_hist = fs.readFileSync('./query/assign/deassign_subj_hist.sql').toString();
+var resetPasswd = fs.readFileSync('./query/admin/user/reset_pass.sql').toString();
 
-var deassign_subj_batch = fs.readFileSync('./query/assign/deassign_subj_batch.sql').toString();
+var search_both = fs.readFileSync('./query/admin/user/search_both.sql').toString();
+
+//-------------------------------- Student ----------------------------------------------------
+
+var cgpa_sql = fs.readFileSync('./query/student/cgpa.sql').toString();
+
+var sem_credits = fs.readFileSync('./query/student/credit.sql').toString();
+
+var gpa_sql = fs.readFileSync('./query/student/gpa_query.sql').toString();
+
+var student_cat = fs.readFileSync('./query/student/join_query.sql').toString();
+
+var sem_credits_all = fs.readFileSync('./query/student/credit_all.sql').toString();
+
+//--------------------------------- Teacher/Class Advisor -------------------------------------
+
+var classadv_DB = fs.readFileSync('./query/teacher/class_advisor/classadv_DB.sql').toString();
+
+var class_adv_stu = fs.readFileSync('./query/teacher/class_advisor/classadv_stu.sql').toString();
+
+//--------------------------------- Teacher/Faculty_Advisor -----------------------------------
+
+var fac_adv_stu = fs.readFileSync('./query/teacher/faculty_advisor/faculty_stud.sql').toString();
+
+//--------------------------------- Teacher/Subject_Teacher -----------------------------------
+
+var subj_tech_stu = fs.readFileSync('./query/teacher/subject_teacher/sub_stud.sql').toString();
 
 // database connection
 
@@ -147,14 +165,11 @@ function sql(opt) {
     else if(opt === "subj_tech_stu"){
         return subj_tech_stu;
     }
-    else if(opt === "fossgraph"){
-        return fossgraph;
-    }
     else if(opt === "batch"){
         return batch;
     }
     else if(opt === "cur_batch"){
-        return all_batch;
+        return cur_batch;
     }
     else if(opt === "edit_batch"){
         return edit_batch;
