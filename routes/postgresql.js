@@ -14,19 +14,39 @@ var sync = require("synchronize");
 module.exports = {
     init : function(cb){
         var client = db.dbconnect('');
-        var credit_query=db.sql('init');
+        var init=db.sql('init');
         console.log('working ... ');
         client.query('CREATE DATABASE "history"',function(er) {
             if(er){
                 console.dir(er);
+                client.end();
                 throw er;
             }
             else{
             var new_client = db.dbconnect('history');
-            new_client.query(credit_query,function(err){
-            cb(err);
+            new_client.query(init,function(err){
+                client.end();
+                cb(err);
             });
         }
+        });
+        
+    }
+    ,
+    populate : function(database,cb){
+        var client = db.dbconnect(database);
+        var populate=db.sql('populate');
+        console.log('working ... ');
+        client.query(populate,function(er) {
+            if(er){
+                console.dir(er);
+                client.end();
+                throw er;
+            }
+            else{
+                client.end();
+                cb(true);
+            }
         });
         
     }
@@ -216,11 +236,11 @@ prin : function(){
                     query = client.query(sql_stu,[data.id]);
                 }
                 else if(data.type=='facultyAdv'){
-                    sql_stu = db.sql('class_adv_stu');
+                    sql_stu = db.sql('faculty_adv_stu');
                     query = client.query(sql_stu,[data.id]);
                 }
                 else if(data.type=='subTeach'){
-                    sql_stu = db.sql('class_adv_stu');
+                    sql_stu = db.sql('subj_tech_stu');
                     query = client.query(sql_stu,[data.id,data.sub_code]);
                 }
                 else{

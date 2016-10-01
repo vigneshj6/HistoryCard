@@ -172,3 +172,27 @@ var TEACH = (function(TEACH) {
     return TEACH;
 
 }(TEACH || {}));
+
+
+//---------- TEACH.Cache ----------//
+
+var TEACH = (function(TEACH) {
+
+    var _cache = {};
+
+    function put(key, value) {
+        _cache[key] = value;
+        return true;
+    }
+
+    function get(key) {
+        return _cache[key];
+    }
+
+    TEACH.Cache = { 
+        put : put,
+        get : get
+    }
+    return TEACH;
+
+}(TEACH || {}));

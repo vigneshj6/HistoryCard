@@ -16,21 +16,9 @@ module.exports = function(routes,session) {
     routes.get('/', function(req, res){
         console.log("teacher "+req.session.user+"page request");//debug
         if(check(req.session.type)) {
-            
             var data={};
-            var querydata = {};
-            querydata.id = req.session.user;
-            querydata.type = 'facultyAdv'
-            db.get_stud_list(req.session.user,'history',querydata,function(val){
-                if(val == {}){
-                }
-                else{
-                console.dir(val);
-                data['student'] = val;
-                data.username=req.session.user;
-                }
-                res.render('teacher',data);
-                });
+            data.username=req.session.user;
+            res.render('teacher',data);
             //});
         }
         else {
@@ -42,7 +30,7 @@ module.exports = function(routes,session) {
     routes.get('/dashboard-html', function(req, res) {
     console.log("HTTP GET request to - /dashboard-html");
 
-    if(req.session.user) {
+    if(check(req.session.type)) {
         if(req.query.role === "facultyAdv") {
             res.render('teacher-faculty');
         }
@@ -64,9 +52,12 @@ module.exports = function(routes,session) {
        if(check(req.session.type)){//check valid login or valid user
             console.log(req.session.user+" AJAX /teacher/report");//debug
             //refer postgresql.js
-            db.student_mark(req.query.rrn,req.query.sem,'history',function(result){
-                if(result){
-                    res.status(200).send(result);
+            db.student_mark(req.query.rrn,req.query.sem,req.session.batch,function(val){
+                if(val){
+                    var result = {};
+                    result["report_hc"]=val["sub_record"];
+                    result["gpa"]=val["gpa"];
+                    res.send(result);
                 }
                 else{
                     res.send("error");
@@ -90,9 +81,9 @@ module.exports = function(routes,session) {
     });
     routes.get('/report-credits',function(req,res){
         if(check(req.session.type)){//check user
-            console.log(req.query.rrn+" AJAX /teacher/credits");//debug
+            console.log(req.query.rrn+" AJAX /teacher/credits"+req.session.batch+"batch");//debug
             //refer postgresql.js
-            db.sem_credits_all(req.query.rrn,'2013-2017',function(result){
+            db.sem_credits_all(req.query.rrn,req.session.batch,function(result){
                 if(result){
                     res.status(200).send(result);
                 }
@@ -108,7 +99,7 @@ module.exports = function(routes,session) {
     //AJAX request /cgpa to get cgpa
     routes.get('/report-cgpa',function(req,res){
         console.log(req.query.rrn+" AJAX /teacher/cgpa");
-        db.cgpa(req.query.rrn,8,'2013-2017',function(x,result){
+        db.cgpa(req.query.rrn,8,req.session.batch,function(x,result){
             if(result){
                 console.dir(result);
                 res.status(200).send(result);
@@ -149,6 +140,7 @@ module.exports = function(routes,session) {
             var querydata = {};
             querydata.id = req.session.user;
             querydata.type = 'facultyAdv';
+            req.session.batch = req.query.batch;
             db.get_stud_list(req.session.user,'history',querydata,function(val){
                 if(val == {}){
                     

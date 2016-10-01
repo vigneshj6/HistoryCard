@@ -6,7 +6,8 @@ var TEACH = (function(TEACH) {
         studList : "/teacher/stud-list",
         reportHc : "/teacher/report-hc",
         reportCredits : "/teacher/report-credits",
-        reportCgpa : "/teacher/report-cgpa"
+        reportCgpa : "/teacher/report-cgpa",
+        reportMarkAtt : "/teacher/report-mark-att"
     }
 
     function _ajaxConfig(url, type, data, resType) {
@@ -55,13 +56,27 @@ var TEACH = (function(TEACH) {
         req.fail(failCb);
     }
 
+    function fetchMarkAtt(data, successCb, failCb) {
+        var req = $.ajax(_ajaxConfig(_url.reportMarkAtt, 'GET', data, 'json'));
+        req.done(successCb);
+        req.fail(failCb);
+    }
+
+    function submitMarkAtt(data, successCb, failCb) {
+        var req = $.ajax(_ajaxConfig(_url.reportMarkAtt, 'POST', data, 'json'));
+        req.done(successCb);
+        req.fail(failCb);
+    }
+
     TEACH.Fs = {
         fetchRole : fetchRole,
         fetchDashboard : fetchDashboard,
         fetchStudList : fetchStudList,
         fetchReportHc : fetchReportHc,
         fetchCredits : fetchCredits,
-        fetchCgpa : fetchCgpa
+        fetchCgpa : fetchCgpa,
+        fetchMarkAtt : fetchMarkAtt,
+        submitMarkAtt : submitMarkAtt
     }  
     return TEACH;  
 }(TEACH || {}));

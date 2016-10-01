@@ -31,7 +31,9 @@ var TEACH = (function(TEACH) {
 
         failPopover : "<b>Failed to fetch data. </b>Try again..!",
 
-        popoverTitle : ".<a href='#' class='close' data-dismiss='alert'>&times;</a>"
+        popoverTitle : ".<a href='#' class='close' data-dismiss='alert'>&times;</a>",
+
+        markAttTableControl : "<button type='button' class='btn btn-primary btn-mg pull-right' id='saveMarkAttBtn'>Save</button><button type='button' class='btn btn-danger btn-mg pull-right margin-lr' id='cancelMarkAttBtn'>Cancel</button>"
     }
     
     function _hb2html(template, json_obj) {
@@ -207,7 +209,92 @@ var TEACH = (function(TEACH) {
             $('#cgpaBtn').popover('show');
         }
     }
+
+    function _genMarkAttTable(arrOfArr) {    
+        var header = arrOfArr[0];
+        var thead_html = '<thead><tr>';
+        for(var i = 0; i < header.length; i++) {
+            thead_html += '<th>' + header[i] + '</th>';
+        }
+        thead_html += '</tr></thead>';
+
+        var tbody_html = '<tbody>';
+        for(var i = 1; i < arrOfArr.length; i++) {
+            var tr_html = '<tr>';
+            var row = arrOfArr[i];
+            tr_html += '<th>' + row[0] + '</th>';
+            for(var j = 1; j < row.length; j++) {
+                tr_html += '<td tabindex="1">' + row[j] + '</td>';
+            }
+            tr_html += '</tr>';
+            tbody_html += tr_html;
+        }
+        tbody_html += '</tbody>';
+
+        return thead_html + tbody_html;
+    }
+
+    function _table2arr(id) {
+        var arrOfArr = [];
+        $('#' + id + ' tr').each(function() {
+            var $row = $(this); 
+            var arr = [];
+            $row.children().each(function() {
+                var $cell = $(this);
+                arr.push($cell.text());
+            });
+            arrOfArr.push(arr);
+        });
+        return arrOfArr;
+    }
+
+    function _updateMarkAttTable() {
+        var data = {
+            table_type : _Field.markAttType()
+        }
+        TEACH.Fs.fetchMarkAtt(data,
+            function(res) {
+                TEACH.Cache.put('markAttTable', res.table_data);
+                var table_html = _genMarkAttTable(res.table_data);
+                _pasteHtml('markAttTable', table_html);
+            },
+            function() {
+                _Error.markAttFetch();
+            });
+    }
     
+    function _restoreMarkAttTable() {
+        var table_data = TEACH.Cache.get('markAttTable');
+        var table_html = _genMarkAttTable(table_data);
+        _pasteHtml('markAttTable', table_html);
+        $('#markAttTable').off();
+        $('#editMarkAttBtn').prop('disabled', false);
+        $('#markAttFooter').empty();
+    }
+
+    function _submitMarkAttTable() {
+        var arrOfArr = _table2arr('markAttTable');
+        var data = {
+            table_data : arrOfArr
+        }
+        TEACH.Fs.submitMarkAtt(data,
+            function(res) {
+                if(res.success === true) {
+                    console.log('success');
+                    TEACH.Cache.put('markAttTable', arrOfArr);
+                    $('#markAttFooter').empty();
+                    $('#markAttTable').off();
+                    $('#editMarkAttBtn').prop('disabled', false);
+                }
+                else {
+                    console.log('failed - ' + res.error);
+                }
+            },
+            function() {
+                console.log('error!!!');
+            });
+    }
+
     //---------- Ui.Event ----------//
 
     Event.changeRole = function(role) {
@@ -229,6 +316,19 @@ var TEACH = (function(TEACH) {
         var html = _template.loadingPopover;
         $('#cgpaBtn').attr('data-content', html);
         $('#creditsBtn').attr('data-content', html);
+    }
+
+    Event.changeMarkAttType = function() {
+        $('#editMarkAttBtn').prop('disabled', false);
+        $('#markAttFooter').empty();
+        _updateMarkAttTable();
+    }
+
+    Event.editMarkAttTable = function() {
+        $('#markAttTable').editableTableWidget();
+        $('#editMarkAttBtn').prop('disabled', true);
+        _pasteHtml('markAttFooter', _template.markAttTableControl);
+        _Bind.markAttControl();
     }
 
     //---------- Ui._Bind ----------//
@@ -260,7 +360,21 @@ var TEACH = (function(TEACH) {
                 $(this).parents('.popover').popover('hide');
             });
         }
+        else if(role === 'classAdv') {
+            $('input[name=markAttType]').each(function() {
+                $(this).change(Event.changeMarkAttType);
+            });
+            $('#editMarkAttBtn').click(Event.editMarkAttTable);
+        }
     } 
+
+    _Bind.markAttControl = function() {
+        $('#saveMarkAttBtn').click(_submitMarkAttTable);
+        $('#cancelMarkAttBtn').click(_restoreMarkAttTable);
+        $('#markAttTable').on('validate', function(evt, value) { 
+            return !isNaN(parseFloat(value)) && isFinite(value);
+        });
+    }
 
     //---------- Ui._Field ----------//
 
@@ -283,6 +397,11 @@ var TEACH = (function(TEACH) {
         else {
             return true;
         }
+    }
+
+    _Field.markAttType = function() {
+        var selectedType = $('input[name=markAttType]:checked').val(); 
+        return selectedType;
     }
 
     //---------- Ui._Error ----------//
@@ -335,6 +454,14 @@ var TEACH = (function(TEACH) {
     _Error.cgpaFetch = function() {
         var html = _template.failPopover;
         $('cgpaBtn').attr('data-content', html);
+    }
+
+    _Error.markAttFetch = function() {
+        var msg = {
+            first : " Failed to fetch " + _Field.markAttType().toUpperCase() + " details. ",
+            middle : "Try again..!"
+        }
+        _toastHtml('headerInfo', _template.fail, msg, 3500);
     }
 
     TEACH.Ui = {

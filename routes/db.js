@@ -46,9 +46,12 @@ var createDB = fs.readFileSync('./query/admin/backup/db.sql').toString();
 
 var drop = fs.readFileSync('./query/admin/backup/drop.sql').toString();
 
+var populate = fs.readFileSync('./query/admin/backup/populate.sql').toString();
+
 var show_tables = fs.readFileSync('./query/admin/backup/show_tables.sql').toString();
 
 var createTable = fs.readFileSync('./query/admin/backup/tables.sql').toString();
+
 
 //------------------------------- Admin/Batch -----------------------------------------------
 
@@ -186,8 +189,8 @@ function sql(opt) {
     else if(opt === "drop_db"){
         return drop;
     }
-    else if(opt === "backup"){
-        return backup;
+    else if(opt === "populate"){
+        return populate;
     }
     else if(opt === "show_tables"){
         return show_tables;
