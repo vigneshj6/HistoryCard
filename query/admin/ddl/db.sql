@@ -1,0 +1,1 @@
+INSERT INTO "public"."batch" values ($1,$2,$3);
