@@ -211,7 +211,13 @@ app.get('/teacher/report-mark-att', function(req, res) {
     console.log("HTTP GET request to - /report-mark-att");
 
     if(req.session.user) {
-        var json_obj = JSON.parse(file2str("/test-data/ajax-res/report-mark-att.json"));
+        var json_obj;
+        if(req.query.role === 'classAdv') {
+            json_obj = JSON.parse(file2str("/test-data/ajax-res/report-mark-att.json"));
+        }
+        else if(req.query.role === 'subTeach') {
+            json_obj = JSON.parse(file2str("/test-data/ajax-res/report-mark-att-sub.json"));
+        }
         res.send(json_obj);
     }
     else {

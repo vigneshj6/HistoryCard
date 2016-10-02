@@ -249,9 +249,14 @@ var TEACH = (function(TEACH) {
     }
 
     function _updateMarkAttTable() {
+        var roleObj = TEACH.Role.getInfo(_Field.role);
+        
         var data = {
+            role : roleObj.role,
+            sub_code : roleObj.code || undefined,
             table_type : _Field.markAttType()
         }
+        
         _pasteHtml('headerInfo', _template.loading);
         TEACH.Fs.fetchMarkAtt(data,
             function(res) {
@@ -309,6 +314,7 @@ var TEACH = (function(TEACH) {
                         middle : " Error: ",
                         last : res.error
                     }
+                    
                     _toastHtml('markAttFooter', _template.info, msg, 3500);
                 }
             },
@@ -384,6 +390,13 @@ var TEACH = (function(TEACH) {
             });
         }
         else if(role === 'classAdv') {
+            $('input[name=markAttType]').each(function() {
+                $(this).change(Event.changeMarkAttType);
+            });
+            $('#editMarkAttBtn').click(Event.editMarkAttTable);
+        }
+        
+        else if(role === 'subTeach') {
             $('input[name=markAttType]').each(function() {
                 $(this).change(Event.changeMarkAttType);
             });
