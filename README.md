@@ -16,22 +16,22 @@ Make sure you've installed all the dependencies and downloaded the code before p
 
 1) Type the following commands in the termial.
 ```
-    $npm install
-    $sudo service postgresql start
-    $psql
-    #\passwd postgres
-    #<type-new-password>
-    #<re-type-password>
-    #\q
+$ npm install
+$ sudo service postgresql start
+$ psql
+# \passwd postgres
+# <type-new-password>
+# <re-type-password>
+# \q
 ```
 2) open `config.json` file, update username as `postgres`, update the password which typed in the terminal and save the file.
 
 3) Type the following commands in the terminal.
 ```
-python check-install.py
-node install-db
+$ python check-install.py
+$ node install-db
 ```
 4) Start the server by typing,
 ```
-npm start
+$ npm start
 ```
