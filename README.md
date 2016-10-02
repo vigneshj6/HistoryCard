@@ -24,7 +24,7 @@ $ psql
 # <re-type-password>
 # \q
 ```
-2) open `config.json` file, update username as `postgres`, update the password which typed in the terminal and save the file.
+2) open `config.json` file, update username as "postgres", update the password which typed in the terminal and save the file.
 
 3) Type the following commands in the terminal.
 ```
