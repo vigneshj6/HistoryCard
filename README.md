@@ -1,6 +1,6 @@
 # HistoryCard
 
-A data management web application for universities to manage students's data. Currently, we are designing this application for an Indian university. So, this might not be useful for many universities in the world. But we hope we'll make this as a generic application which can be used by most of the universities.
+HistoryCard is a data management web application for universities to manage students's data. Currently, we are designing this application for an Indian university. So, this might not be useful for many universities in the world. But we hope we'll make this as a generic application which can be used by most of the universities.
 
 ## Dependencies
 
