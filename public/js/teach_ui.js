@@ -33,7 +33,7 @@ var TEACH = (function(TEACH) {
 
         popoverTitle : ".<a href='#' class='close' data-dismiss='alert'>&times;</a>",
 
-        markAttTableControl : "<button type='button' class='btn btn-primary btn-mg pull-right' id='saveMarkAttBtn'>Save</button><button type='button' class='btn btn-danger btn-mg pull-right margin-lr' id='cancelMarkAttBtn'>Cancel</button>"
+        markAttTableControl : "<button type='button' class='btn btn-primary btn-mg pull-right' data-loading-text='please wait..' id='saveMarkAttBtn'>Save</button><button type='button' class='btn btn-danger btn-mg pull-right margin-lr' id='cancelMarkAttBtn'>Cancel</button>"
     }
     
     function _hb2html(template, json_obj) {
@@ -249,14 +249,25 @@ var TEACH = (function(TEACH) {
     }
 
     function _updateMarkAttTable() {
+        var roleObj = TEACH.Role.getInfo(_Field.role);
+        
         var data = {
+            role : roleObj.role,
+            sub_code : roleObj.code || undefined,
             table_type : _Field.markAttType()
         }
+        
+        _pasteHtml('headerInfo', _template.loading);
         TEACH.Fs.fetchMarkAtt(data,
             function(res) {
                 TEACH.Cache.put('markAttTable', res.table_data);
                 var table_html = _genMarkAttTable(res.table_data);
                 _pasteHtml('markAttTable', table_html);
+                
+                var msg = {
+                    first : " Table data has been loaded successfully."
+                }
+                _toastHtml('headerInfo', _template.success, msg, 3500);
             },
             function() {
                 _Error.markAttFetch();
@@ -270,9 +281,15 @@ var TEACH = (function(TEACH) {
         $('#markAttTable').off();
         $('#editMarkAttBtn').prop('disabled', false);
         $('#markAttFooter').empty();
+        var msg = {
+            first : " Your changes have been canccelled."
+        }
+        _toastHtml('markAttFooter', _template.info, msg, 3500);
     }
 
     function _submitMarkAttTable() {
+        $('#saveMarkAttBtn').button('loading');
+        
         var arrOfArr = _table2arr('markAttTable');
         var data = {
             table_data : arrOfArr
@@ -280,18 +297,30 @@ var TEACH = (function(TEACH) {
         TEACH.Fs.submitMarkAtt(data,
             function(res) {
                 if(res.success === true) {
-                    console.log('success');
                     TEACH.Cache.put('markAttTable', arrOfArr);
                     $('#markAttFooter').empty();
                     $('#markAttTable').off();
                     $('#editMarkAttBtn').prop('disabled', false);
+                    var msg = {
+                        middle : " Success.",
+                        last : " Your changes have been saved"
+                    }
+                    _toastHtml('markAttFooter', _template.success, msg, 3500);
                 }
                 else {
-                    console.log('failed - ' + res.error);
+                    $('#saveMarkAttBtn').button('reset');
+                    
+                    var msg = {
+                        middle : " Error: ",
+                        last : res.error
+                    }
+                    
+                    _toastHtml('markAttFooter', _template.info, msg, 3500);
                 }
             },
             function() {
-                console.log('error!!!');
+                $('#saveMarkAttBtn').button('reset');
+                _Error.markAttSubmit();
             });
     }
 
@@ -361,6 +390,13 @@ var TEACH = (function(TEACH) {
             });
         }
         else if(role === 'classAdv') {
+            $('input[name=markAttType]').each(function() {
+                $(this).change(Event.changeMarkAttType);
+            });
+            $('#editMarkAttBtn').click(Event.editMarkAttTable);
+        }
+        
+        else if(role === 'subTeach') {
             $('input[name=markAttType]').each(function() {
                 $(this).change(Event.changeMarkAttType);
             });
@@ -462,6 +498,14 @@ var TEACH = (function(TEACH) {
             middle : "Try again..!"
         }
         _toastHtml('headerInfo', _template.fail, msg, 3500);
+    }
+    
+    _Error.markAttSubmit = function() {
+        var msg = {
+            first : " Something went wrong. ",
+            middle : "Try again..!"
+        }
+        _toastHtml('markAttFooter', _template.fail, msg, 3500);
     }
 
     TEACH.Ui = {
