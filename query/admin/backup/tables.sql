@@ -48,7 +48,10 @@ CREATE SERVER app_db FOREIGN DATA WRAPPER postgres_fdw OPTIONS (
     dbname 'history',
     host 'localhost'
 );
-
+CREATE USER MAPPING FOR postgres SERVER app_db OPTIONS (
+    password 'enter',
+    "user" 'postgres'
+);
 
 
 SET default_tablespace = '';

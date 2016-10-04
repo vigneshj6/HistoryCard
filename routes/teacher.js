@@ -156,7 +156,10 @@ module.exports = function(routes,session) {
         }
     });
     routes.get('/report-mark-att',function(req,res){
-        console.log(req.query.rrn+" AJAX /teacher/cgpa");
-        res.send({"table_data":[["RRN", "CSB2101", "CSB2101-Att", "CSB2103", "CSB2104", "CSB2105-Att", "CSB2102", "CSB2102-Att"]]});
+        db.getCat1(req.session.user,req.session.batch,req.query,function(val){
+            var tb = {};
+            tb["table_data"]=val;
+            res.send(tb);
+        });
     });
 };

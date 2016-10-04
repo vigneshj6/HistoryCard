@@ -4,6 +4,8 @@ var db = require("./db");
 var bcrypt = require("bcrypt");
 //import fs module
 var fs = require("fs");
+
+var jtrans = require("./jtrans")
 //to hash
 //bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
 //Store hash in your password DB.
@@ -160,21 +162,25 @@ module.exports = {
         }
     }
     ,
-    fossgraph : function(usercall){
-        var client = db.dbconnect('2013-2017');
-        var join_query = db.sql('fossgraph');
-        var query = client.query(join_query);
-        var result = [];
-        var sen = {};
-            query.on('row', function(val) {
-                result.push(val);
+    getCat1 : function(username,dbval,data,usercall){
+        if(username){
+            var client = db.dbconnect(dbval);
+            var classadv_cat1=db.sql('classadv_cat1');
+            var query = client.query(classadv_cat1,[username,3]);
+            var cat1 = [];
+            query.on('row',function(val) {
+                cat1.push(val); 
             });
-            query.on('end',function(val) {
-                    console.dir(result)
-                    sen = result;
-                    usercall(sen);
+            query.on('end',function(val){
+                var db = {};
+                db["db"]=cat1;
+                console.dir(db);
+                jtrans.trans(db,function(v){
+                    usercall(v);
                 });
-        
+                client.end();
+            });
+        }
     }
     ,
 /*
