@@ -229,8 +229,9 @@ app.post('/teacher/report-mark-att', function(req, res) {
     console.log("HTTP POST request to - /report-mark-att");
 
     if(req.session.user) {
-        console.dir(req.body.table_data);
-        var json_obj = {success : true};
+        var json_obj = {
+            success : true
+        };
         res.send(json_obj);
     }
     else {
