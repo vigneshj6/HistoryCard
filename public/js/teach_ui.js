@@ -233,7 +233,23 @@ var TEACH = (function(TEACH) {
 
         return thead_html + tbody_html;
     }
-
+    function _table2csv(id) {
+        var arrOfArr = [];
+        var csv = "";
+        $('#' + id + ' tr').each(function() {
+            var inList = [];
+            var $row = $(this); 
+            var arr = [];
+            $row.children().each(function() {
+                var $cell = $(this);
+                arr.push($cell.text());
+                inList.push($cell.text()); 
+            });
+            csv = csv + inList.toString()+"\n"
+            arrOfArr.push(arr);
+        });
+        return csv;
+    }
     function _table2arr(id) {
         var arrOfArr = [];
         $('#' + id + ' tr').each(function() {
@@ -289,15 +305,16 @@ var TEACH = (function(TEACH) {
 
     function _submitMarkAttTable() {
         $('#saveMarkAttBtn').button('loading');
-        
-        var arrOfArr = _table2arr('markAttTable');
+        var csv = _table2csv('markAttTable');
+        console.log(csv);
+        //var arrOfArr = JSON.stringify(_table2arr('markAttTable'));
         var data = {
-            table_data : arrOfArr
+            table_data : csv
         }
         TEACH.Fs.submitMarkAtt(data,
             function(res) {
                 if(res.success === true) {
-                    TEACH.Cache.put('markAttTable', arrOfArr);
+                    TEACH.Cache.put('markAttTable', csv);
                     $('#markAttFooter').empty();
                     $('#markAttTable').off();
                     $('#editMarkAttBtn').prop('disabled', false);

@@ -162,4 +162,10 @@ module.exports = function(routes,session) {
             res.send(tb);
         });
     });
+    routes.post('/report-mark-att',function(req,res){
+        var js = req.body["table_data"];
+        console.dir(js)
+        console.dir(js.toString())
+        res.send({});
+    });
 };
