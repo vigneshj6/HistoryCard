@@ -6,7 +6,7 @@ module.exports = {
         var zipper = archiver('zip');
         
         //change here for output-file name - zip name
-        var out = fs.createWriteStream(__dirname + "/public/dumb/"+fname+".zip");
+        var out = fs.createWriteStream(__dirname + "/../public/dumb/"+fname+".zip");
         
         
         //change here for input-directory

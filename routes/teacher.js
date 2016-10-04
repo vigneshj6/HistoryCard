@@ -139,7 +139,7 @@ module.exports = function(routes,session) {
             var data={};
             var querydata = {};
             querydata.id = req.session.user;
-            querydata.type = 'facultyAdv';
+            querydata.type = req.query.role;
             req.session.batch = req.query.batch;
             db.get_stud_list(req.session.user,'history',querydata,function(val){
                 if(val == {}){
@@ -154,5 +154,9 @@ module.exports = function(routes,session) {
                 //send to the client
             });
         }
+    });
+    routes.get('/report-mark-att',function(req,res){
+        console.log(req.query.rrn+" AJAX /teacher/cgpa");
+        res.send({"table_data":[["RRN", "CSB2101", "CSB2101-Att", "CSB2103", "CSB2104", "CSB2105-Att", "CSB2102", "CSB2102-Att"]]});
     });
 };

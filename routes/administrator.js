@@ -122,13 +122,13 @@ module.exports = function(routes,session) {
     });
     routes.get('/download-csv', function(req, res) {
         if(check(req.session.type)){
-            db.backup(req.session.user,req.query.batch,'/home/ubuntu/workspace/vig-temp/public/dumb/sup/'
+            db.backup(req.session.user,req.query.batch,__dirname+'/../public/dumb/sup/'
             ,
             function(val){
                 if(val==true){
                     console.dir(__dirname);
                     zipper.zipIt('his',function(val){
-                        var file = __dirname+'/public/dumb/his.zip';
+                        var file = __dirname+'/../public/dumb/his.zip';
                         res.download(file);
                     });
                 }
@@ -144,10 +144,10 @@ module.exports = function(routes,session) {
             var exec = require('child_process').exec;
             function puts(error, stdout, stderr) { 
                 sys.puts(stdout)
-                var file = __dirname+'/public/dumb/'+h+'.sql';
+                var file = __dirname+'/../public/dumb/'+h+'.sql';
                 res.download(file);
             }
-            exec("PGPASSWORD='enter' pg_dump -U ramki -h localhost "+h+" -f /home/ubuntu/workspace/vig-temp/public/dumb/"+h+".sql", puts);
+            exec("PGPASSWORD='enter' pg_dump -U ramki -h localhost "+h+" -f "+__dirname+"/../public/dumb/"+h+".sql", puts);
             
         }
     });
