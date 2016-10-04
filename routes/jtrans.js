@@ -84,7 +84,5 @@ exports.trans=function(db_obj,usercall){
     
     th.unshift("rrn");
     lol.unshift(th);
-    
-    console.dir(lol);
     usercall(lol);
 }

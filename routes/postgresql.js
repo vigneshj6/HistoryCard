@@ -174,7 +174,6 @@ module.exports = {
             query.on('end',function(val){
                 var db = {};
                 db["db"]=cat1;
-                console.dir(db);
                 jtrans.trans(db,function(v){
                     usercall(v);
                 });
