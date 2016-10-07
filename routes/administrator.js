@@ -351,8 +351,11 @@ module.exports = function(routes,session) {
     routes.get('/subject-list', function(req, res) {
       if(check(req.session.type)) {
             var result = {};
-            if(req.query.query){}
-            else{req.query.query='';}
+            if(req.query.batch==''){
+                res.send({error_text:"select batch"});
+            }
+            else{
+            req.query.query=req.query.query||'';
             db.searchSubject(req.session.user,req.query.batch,''+req.query.query,req.query.from,function(val){
                     result["subjects"]=val;
                     if(val){
@@ -363,6 +366,8 @@ module.exports = function(routes,session) {
                     }
             });
         }
+          
+      }
     });
     routes.post('/subject-add', function(req, res) {
       if(check(req.session.type)){

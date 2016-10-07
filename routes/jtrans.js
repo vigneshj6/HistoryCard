@@ -14,7 +14,7 @@ exports.trans=function(db_obj,usercall){
     
     //used to produce object-keys w.r.t subject-code
     function mak(sub_code) {
-        return [sub_code + "-M", sub_code + "-A"];
+        return [sub_code, sub_code + "-Att"];
     }
     var db_arr = db_obj.db;
     
@@ -34,7 +34,7 @@ exports.trans=function(db_obj,usercall){
     var dod = {};           //dict of dict
     for(var i = 0; i < rrn_arr.length; i++) {
         var dict = {};
-        dict['rrn'] = rrn_arr[i];
+        dict['RRN'] = rrn_arr[i];
     
         for(var j = 0; j < sub_arr.length; j++) {
     
@@ -82,7 +82,7 @@ exports.trans=function(db_obj,usercall){
     
     //-----------------------------------------
     
-    th.unshift("rrn");
+    th.unshift("RRN");
     lol.unshift(th);
     usercall(lol);
 }

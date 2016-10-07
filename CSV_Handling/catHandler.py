@@ -62,6 +62,6 @@ def genCatCsv(catType,markAttType,sem,inputfile,outputfile):
            writer.writerow({fieldnames[0]:cat_list[k].rrn,fieldnames[1]:cat_list[k].sub_code,fieldnames[2]:cat_list[k].cat_mark,fieldnames[3]:cat_list[k].cat_att,fieldnames[4]:cat_list[k].sem})
 if(len(sys.argv)!=6):
     #print(len(sys.argv))
-    print('Usage: python3.x cathandler.py cat1/2/3 mark/att/markAtt sem inputfilename,csv outputfilename.csv')
+    print('Usage: python3.x cathandler.py cat1/2/3 mark/att/markAtt sem inputfilename.csv outputfilename.csv')
 else:
     genCatCsv(sys.argv[1],sys.argv[2],int(sys.argv[3]),sys.argv[4],sys.argv[5])

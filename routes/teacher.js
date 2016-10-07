@@ -2,6 +2,7 @@ var db = require("./postgresql");
 //future use
 var curr='/teacher';
 
+var csv = require("./csvtrans");
 
 var sync = require("synchronize");
 
@@ -165,7 +166,9 @@ module.exports = function(routes,session) {
     routes.post('/report-mark-att',function(req,res){
         var js = req.body["table_data"];
         console.dir(js)
-        console.dir(js.toString())
+        csv.write(js.toString(),function(val){
+            console.dir(val)
+        });
         res.send({});
     });
 };
