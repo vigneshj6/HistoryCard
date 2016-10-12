@@ -954,5 +954,20 @@ prin : function(){
             usercall(result);
         })
     }
-    
+    ,
+    csvparallel : function(client,k,path,cb){
+        var str1 = 'COPY \"'+k+'\" FROM\''+path+k+'.csv\' DELIMITER \',\' CSV HEADER;';
+        var value = false;
+        
+        client.query(str1,function(er) { 
+            if(er){
+                console.log(er.toString());
+            }
+            else{
+                console.log(str1);
+                value=true;
+            }
+            cb(null,value);
+        })
+    }
 };

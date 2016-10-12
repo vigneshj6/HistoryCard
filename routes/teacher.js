@@ -165,10 +165,17 @@ module.exports = function(routes,session) {
     });
     routes.post('/report-mark-att',function(req,res){
         var js = req.body["table_data"];
-        console.dir(js)
-        csv.write(js.toString(),function(val){
-            console.dir(val)
+        console.dir(js);
+        var data = {};
+        csv.writecsv("input.csv",js,function(){
+            csv.transform(function(){
+                res.sendStatus(200)
+            });
         });
-        res.send({});
+        /*
+            csv.write(js.toString(),function(val){
+                console.dir(val)
+            });
+        */
     });
 };
