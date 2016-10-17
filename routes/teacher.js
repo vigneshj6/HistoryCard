@@ -169,7 +169,10 @@ module.exports = function(routes,session) {
         var data = {};
         csv.writecsv("input.csv",js,function(){
             csv.transform(function(){
-                res.sendStatus(200)
+                db.csvtotable("hello","out.csv","CAT1_TEMP_TABLE",__dirname+"/../public/csv/",function(val){
+                    console.dir(val)
+                    res.sendStatus(200);
+                });
             });
         });
         /*

@@ -952,13 +952,13 @@ prin : function(){
             }
             client.end();
             usercall(result);
-        })
+        });
     }
     ,
-    csvparallel : function(client,k,path,cb){
-        var str1 = 'COPY \"'+k+'\" FROM\''+path+k+'.csv\' DELIMITER \',\' CSV HEADER;';
+    csvtotable : function(user,temp_name,table_name,path,cb){
+        var str1 = 'COPY \"'+table_name+'\" FROM \''+path+temp_name+'\' DELIMITER \',\' CSV HEADER;';
         var value = false;
-        
+        var client = db.dbconnect("2013-2017");
         client.query(str1,function(er) { 
             if(er){
                 console.log(er.toString());
@@ -968,6 +968,22 @@ prin : function(){
                 value=true;
             }
             cb(null,value);
-        })
+        });
+    }
+    ,
+    upsertTable : function(user,temp_name,table_name,cb){
+        var str1 = db.sql('upsert_cat1');
+        var value = false;
+        var client = db.dbconnect("2013-2017");
+        client.query(str1,function(er) { 
+            if(er){
+                console.log(er.toString());
+            }
+            else{
+                console.log(str1);
+                value=true;
+            }
+            cb(null,value);
+        });
     }
 };

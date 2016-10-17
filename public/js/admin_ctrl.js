@@ -305,7 +305,7 @@ function add_batch() {
     toast('add_batch_info', add_batch_error_html, 3500);
   });
   
-   
+  return false;
 }
 
 function update_form_edit_batch(batch_name) {
@@ -374,6 +374,7 @@ function submit_form_edit_batch() {
     toast('edit_batch_info', error_html, 3500);
   });
 
+ return false;
 }
 
 function update_batch() {
