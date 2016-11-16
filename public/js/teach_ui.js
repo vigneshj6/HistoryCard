@@ -418,8 +418,13 @@ var TEACH = (function(TEACH) {
     _Bind.markAttControl = function() {
         $('#saveMarkAttBtn').click(_submitMarkAttTable);
         $('#cancelMarkAttBtn').click(_restoreMarkAttTable);
-        $('#markAttTable').on('validate', function(evt, value) { 
-            return !isNaN(parseFloat(value)) && isFinite(value);
+        $('#markAttTable').on('validate', function(evt, value) {
+            if(value === '') {
+                return true;
+            }
+            else {
+                return !isNaN(parseFloat(value)) && isFinite(value);
+            }
         });
     }
 
