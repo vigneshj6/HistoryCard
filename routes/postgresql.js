@@ -166,7 +166,7 @@ module.exports = {
         if(username){
             var client = db.dbconnect(dbval);
             var classadv_cat1=db.sql('classadv_cat1');
-            var query = client.query(classadv_cat1,[username,4]);
+            var query = client.query(classadv_cat1,[username,data.sem]);
             var cat1 = [];
             query.on('row',function(val) {
                 cat1.push(val); 
