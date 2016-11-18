@@ -325,10 +325,11 @@ var TEACH = (function(TEACH) {
                         last : " Your changes have been saved"
                     }
                     _toastHtml('markAttFooter', _template.success, msg, 3500);
+                    
                 }
                 else {
                     $('#saveMarkAttBtn').button('reset');
-                    
+                    $('#editMarkAttBtn').prop('disabled', false);
                     var msg = {
                         middle : " Error: ",
                         last : res.error
