@@ -265,6 +265,7 @@ var TEACH = (function(TEACH) {
         
         var data = {
             role : roleObj.role,
+            sem: roleObj.sem,
             sub_code : roleObj.code || undefined,
             table_type : _Field.markAttType()
         }
@@ -301,10 +302,17 @@ var TEACH = (function(TEACH) {
 
     function _submitMarkAttTable() {
         $('#saveMarkAttBtn').button('loading');
+        var roleObj = TEACH.Role.getInfo(_Field.role);
         var csv = _table2csv('markAttTable');
+        
         var data = {
+            role : roleObj.role,
+            sem: roleObj.sem,
+            sub_code : roleObj.code || undefined,
+            table_type : _Field.markAttType(),
             table_data : csv
         }
+        
         TEACH.Fs.submitMarkAtt(data,
             function(res) {
                 if(res.success === true) {
