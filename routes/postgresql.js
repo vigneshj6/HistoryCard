@@ -815,7 +815,7 @@ prin : function(){
         var show = db.sql('show_classadv');
         var query = client.query(show,[data.id]);
         query.on('row',function(val){
-            result.push({"id":data.id,"role":"classAdv","batch":val["Batch"],"department":val["DEPARTMENT"],"section":val["SECTION"],"students":val["count"]});
+            result.push({"id":data.id,"role":"classAdv","batch":val["Batch"],"department":val["DEPARTMENT"],"section":val["SECTION"],"sem":val["SEMESTER"],"students":val["count"]});
         });
         query.on('end',function(val) {
             client.end();
@@ -843,7 +843,7 @@ prin : function(){
         var show = db.sql('show_subject_teach');
         var query = client.query(show,[data.id]);
         query.on('row',function(val){
-            result.push({"id":data.id,"role":"subTeach","batch":val["Batch"],"department":val["DEPARTMENT"],"section":val["SECTION"],"students":val["count"],"sub_code":val["SUBJECT_CODE"]});
+            result.push({"id":data.id,"role":"subTeach","batch":val["Batch"],"department":val["DEPARTMENT"],"section":val["SECTION"],"students":val["count"],"sem":val["SEMESTER"],"sub_code":val["SUBJECT_CODE"]});
         });
         query.on('end',function(val) {
             client.end();
