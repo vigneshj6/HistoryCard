@@ -159,7 +159,9 @@ module.exports = function(routes,session) {
     routes.get('/report-mark-att',function(req,res){
         db.getCat1(req.session.user,req.session.batch,req.query,function(val){
             var tb = {};
+            console.dir(req.session.batch);
             tb["table_data"]=val;
+            console.dir(tb);
             res.send(tb);
         });
     });
@@ -169,9 +171,11 @@ module.exports = function(routes,session) {
         var data = {};
         csv.writecsv("input.csv",js,function(){
             csv.transform(function(){
-                db.csvtotable("hello","out.csv","CAT1_TEMP_TABLE",__dirname+"/../public/csv/",function(val){
-                    console.dir(val)
-                    res.sendStatus(200);
+                db.csvtotable("hello","out.csv","CAT1_TEMP_TABLE",__dirname+"/../public/csv/",function(n,val){
+                    db.upsertTable(function(n,val){
+                        console.dir(val);
+                        res.sendStatus(200);
+                    });
                 });
             });
         });
@@ -179,6 +183,7 @@ module.exports = function(routes,session) {
             csv.write(js.toString(),function(val){
                 console.dir(val)
             });
+            
         */
     });
 };

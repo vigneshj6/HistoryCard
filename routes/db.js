@@ -116,6 +116,8 @@ var class_adv_stu = fs.readFileSync('./query/teacher/class_advisor/classadv_stu.
 
 var classadv_cat1 = fs.readFileSync('./query/teacher/class_advisor/classadv_cat1.sql').toString();
 
+var upsert_cat1 = fs.readFileSync('./query/teacher/class_advisor/upsert_cat1.sql').toString();
+
 //--------------------------------- Teacher/Faculty_Advisor -----------------------------------
 
 var fac_adv_stu = fs.readFileSync('./query/teacher/faculty_advisor/faculty_stud.sql').toString();
@@ -289,6 +291,9 @@ function sql(opt) {
     }
     else if(opt === "classadv_cat1"){
         return classadv_cat1;
+    }
+    else if(opt === "upsert_cat1"){
+        return upsert_cat1;
     }
     else{
         return "0";

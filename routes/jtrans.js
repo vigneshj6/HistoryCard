@@ -18,11 +18,12 @@ exports.trans=function(db_obj,usercall){
     }
     var db_arr = db_obj.db;
     
-    var rrn_arr = [];
+    var rrn_arr = db_obj.rrn;
     var sub_arr = [];
+    console.dir(rrn_arr)
     
     db_arr.forEach(function(item) {
-        rrn_arr.push(item.rrn);
+        //rrn_arr.push(item.rrn);
         sub_arr.push(item.sub_code);
     });
     
@@ -42,8 +43,8 @@ exports.trans=function(db_obj,usercall){
             var mark_k = curSub[0];
             var att_k = curSub[1];
             
-            dict[mark_k] = undefined;
-            dict[att_k] = undefined;
+            dict[mark_k] = 0;
+            dict[att_k] = 0;
         }
         dod[rrn_arr[i]] = dict;
     }

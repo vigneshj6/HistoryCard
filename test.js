@@ -15,7 +15,6 @@ var func = function(){
 return new Promise(
 function(resolve,reject){
     resolve();
-    Promise.all();
 })
 .then(function(){
     console.log("next");

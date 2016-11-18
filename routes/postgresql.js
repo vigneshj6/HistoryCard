@@ -166,18 +166,29 @@ module.exports = {
         if(username){
             var client = db.dbconnect(dbval);
             var classadv_cat1=db.sql('classadv_cat1');
-            var query = client.query(classadv_cat1,[username,3]);
+            var query = client.query(classadv_cat1,[username,4]);
             var cat1 = [];
             query.on('row',function(val) {
                 cat1.push(val); 
             });
             query.on('end',function(val){
                 var db = {};
+                var data1 = {};
                 db["db"]=cat1;
-                jtrans.trans(db,function(v){
-                    usercall(v);
-                });
-                client.end();
+                data1.type='classAdv';
+                data1.id = username;
+                db["rrn"]=[];
+                module.exports.get_stud_list(username,dbval,data1,
+                function(val){
+                    console.dir(val)
+                    val.forEach(function(item){
+                       db["rrn"].push(item.rrn); 
+                    });
+                    jtrans.trans(db,function(v){
+                        usercall(v);
+                    });
+                    client.end();
+                })
             });
         }
     }
@@ -971,11 +982,12 @@ prin : function(){
         });
     }
     ,
-    upsertTable : function(user,temp_name,table_name,cb){
+    upsertTable : function(cb)
+    {
         var str1 = db.sql('upsert_cat1');
         var value = false;
         var client = db.dbconnect("2013-2017");
-        client.query(str1,function(er) { 
+        client.query(str1,function(er) {
             if(er){
                 console.log(er.toString());
             }
