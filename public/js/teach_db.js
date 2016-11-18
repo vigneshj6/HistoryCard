@@ -13,12 +13,14 @@ var TEACH = (function(TEACH) {
             _classAdv.batch = obj.batch;
             _classAdv.dept = obj.department;
             _classAdv.sec = obj.section;
+            _classAdv.sem = obj.sem;
         }
         else if(role === "facultyAdv") {
             _facultyAdv.role = 'facultyAdv';
             _facultyAdv.batch = obj.batch;
             _facultyAdv.dept = obj.department;
             _facultyAdv.sec = obj.section;
+            _facultyAdv.sem = obj.sem;
         }
         else if(role === "subTeach") {
             var sub = {};
@@ -27,6 +29,7 @@ var TEACH = (function(TEACH) {
             sub.dept = obj.department;
             sub.sec = obj.section;
             sub.code = obj.sub_code;
+            sub.sem = obj.sem;
 
             _subTeach.push(sub);
         }
