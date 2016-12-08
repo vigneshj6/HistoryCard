@@ -190,16 +190,28 @@ function getGpaGraph(){
 
   //when the ajax request-response is successfull
   request.done(function(response) {
-    
-    //push the contents in response json to 'list' and 'label' arrays
-    var i = 0;
-    for(var key in response) {
-      list.push(response[key]);
-      key = key.toUpperCase();
-      label[i] = key[0] + key[1] + key[2] + " " + key[3];
-      i++;
-    }
   
+  var sem_keys =[], len = 0, k;
+  
+  for (k in response) {
+    sem_keys.push(k);
+  }
+
+  sem_keys.sort();
+  console.log(sem_keys);
+
+  len = sem_keys.length;
+  
+  for (var i = 0; i < len; i++) {
+    k = sem_keys[i];
+    list.push(response[k]);
+    k = k.toUpperCase();
+    label[i] = k[0] + k[1] + k[2] + " " + k[3];
+  }
+  
+  console.log(list);
+  console.log(label);
+
     //resetting button status - displays actual text of the button
     $('#load3').button('reset'); 
     

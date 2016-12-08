@@ -174,7 +174,7 @@ module.exports = function(routes,session) {
                 db.csvtotable("hello","out.csv","CAT1_TEMP_TABLE",__dirname+"/../public/csv/",function(n,val){
                     db.upsertTable(function(n,val){
                         console.dir(val);
-                        res.sendStatus(200);
+                        res.send({"success":true});
                     });
                 });
             });
