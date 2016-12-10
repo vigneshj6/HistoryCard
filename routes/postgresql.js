@@ -181,7 +181,7 @@ module.exports = {
                 function(val){
                     console.dir(val)
                     val.forEach(function(item){
-                       db["rrn"].push(item.rrn); 
+                       db["rrn"].push(item.rrn);
                     });
                     jtrans.trans(db,function(v){
                         usercall(v);

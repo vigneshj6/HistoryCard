@@ -4,6 +4,7 @@ var pg = require("pg");
 
 var config = require('../config.json');
 
+
 // loading sql query as string.
 var init = fs.readFileSync('./query/init/init.sql').toString();
 
@@ -132,7 +133,8 @@ function db(db){
     var conString;
     if(db!='')
     {
-        conString = "pg://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+":5432/"+db;
+        conString = process.env.DATABASE_URL||("pg://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+":5432/");
+        conString = conString+db;
     }
     else
     {
