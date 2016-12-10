@@ -22,7 +22,6 @@ module.exports = {
             if(er){
                 console.dir(er);
                 client.end();
-                throw er;
             }
             else{
             var new_client = db.dbconnect('history');

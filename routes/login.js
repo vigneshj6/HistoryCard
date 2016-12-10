@@ -5,7 +5,17 @@ var db=require("./postgresql");
 
 //body-parser package has request parser functionality
 //request with query parsed to json eg: (?sem=1 to {sem:1}) 
-
+db.init(function(result){
+        if(result){
+            console.dir(result);
+            process.exit();
+        }
+        else{
+            console.log('Successfuuly configured Database!!!');
+            process.exit();
+        }
+        
+    });
 
 //exports the module and functions defined here to main.js(refer main.js).
 //we recieve router object and session json from main.js
