@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  postgres:
+    image: 'postgres:9.5'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: enter
+  website:
+    build: .
+    links:
+      - postgres
+    command: >
+      npm start
+    ports:
+      - '8080:8080'
+    environment:
+      SEQ_USER: postgres
+      SEQ_PW: enter
+      DATABASE_URL: postgres://postgres:enter@vig-post:5432/
